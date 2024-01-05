@@ -1,0 +1,461 @@
+﻿<Page x:Class="FolkTrigger.Pages.CnnPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+      xmlns:sys="clr-namespace:System;assembly=mscorlib"
+      xmlns:ft="clr-namespace:FTCustomControlLibrary;assembly=FTCustomControlLibrary"
+      xmlns:local="clr-namespace:FolkTrigger.Pages"
+      mc:Ignorable="d"
+      Title="CnnPage"
+      d:DesignHeight="720"
+      d:DesignWidth="1216" d:DataContext="{local:CnnPageViewModel}">
+
+    <Page.Resources>
+        <Style x:Key="TextCardBorder" TargetType="{x:Type Border}">
+            <Setter Property="Background" Value="#343434" />
+            <Setter Property="BorderBrush" Value="#6a6a6a" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="4" />
+            <Setter Property="Margin" Value="0 0 0 8"></Setter>
+        </Style>
+
+        <Style x:Key="TextCardText" TargetType="{x:Type TextBlock}">
+            <Setter Property="FontFamily" Value="Microsoft Yahei" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Margin" Value="4" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="TextAlignment" Value="Center" />
+        </Style>
+
+        <ObjectDataProvider x:Key="AudioType"
+                            MethodName="GetNames"
+                            ObjectType="{x:Type sys:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="local:AudioType" />
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+
+    </Page.Resources>
+
+    <Grid Background="Transparent">
+        <DockPanel ZIndex="2" LastChildFill="False">
+            <TextBlock x:Name="WarningTextBlock"
+                       DockPanel.Dock="Bottom"
+                       Background="#b71c1c"
+                       Padding="8 8"
+                       FontSize="12"
+                       Visibility="Hidden" />
+        </DockPanel>
+
+        <ScrollViewer Background="#262626" VerticalScrollBarVisibility="Auto"
+                      HorizontalScrollBarVisibility="Disabled"
+                      Template="{StaticResource CustomScrollViewer}">
+
+            <!--页面整体控制-->
+            <Grid Margin="24 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <!--抬头和访问按钮部分-->
+                <Grid Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Grid Row="0" Margin="0 12">
+                        <TextBlock FontSize="16" FontWeight="Medium">
+                            CNN
+                        </TextBlock>
+                    </Grid>
+
+                    <Grid Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="4*" />
+                            <ColumnDefinition Width="4*" />
+                            <ColumnDefinition Width="4*" />
+                            <ColumnDefinition Width="4*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Button Grid.Row="0" Grid.Column="0"
+                                Tag="{x:Static local:CnnLink.Readme}"
+                                Click="CnnPageLinkButton_Click"
+                                Style="{StaticResource StartPageLinkButton}">
+                            <Button.Content>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <svgc:SvgViewbox IsHitTestVisible="False"
+                                                     Grid.Column="0"
+                                                     DockPanel.Dock="Left"
+                                                     HorizontalAlignment="Left"
+                                                     Height="20" Width="20"
+                                                     Margin="20 0 16 0"
+                                                     Source="pack://application:,,,/Assets/Icon/Cnn/Cnn_readme.svg" />
+                                    <StackPanel Grid.Column="1" Orientation="Vertical"
+                                                VerticalAlignment="Center">
+                                        <TextBlock FontSize="14" Margin="0 0 0 4">描述文件</TextBlock>
+                                        <TextBlock FontSize="12" FontWeight="Light">./readme.md</TextBlock>
+                                    </StackPanel>
+                                    <svgc:SvgViewbox IsHitTestVisible="False"
+                                                     Grid.Column="2"
+                                                     DockPanel.Dock="Right"
+                                                     Margin="0 0 16 0"
+                                                     HorizontalAlignment="Right"
+                                                     Height="10" Width="10"
+                                                     Source="pack://application:,,,/Assets/Icon/Open.svg" />
+                                </Grid>
+                            </Button.Content>
+                        </Button>
+
+                        <Button Grid.Row="0" Grid.Column="1"
+                                Click="CnnPageLinkButton_Click"
+                                Tag="{x:Static local:CnnLink.Root}"
+                                Style="{StaticResource StartPageLinkButton}">
+                            <Button.Content>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <svgc:SvgViewbox IsHitTestVisible="False"
+                                                     Grid.Column="0"
+                                                     DockPanel.Dock="Left"
+                                                     HorizontalAlignment="Left"
+                                                     Height="20" Width="20"
+                                                     Margin="20 0 16 0"
+                                                     Source="pack://application:,,,/Assets/Icon/Cnn/Cnn_folder.svg" />
+                                    <StackPanel Grid.Column="1" Orientation="Vertical"
+                                                VerticalAlignment="Center">
+                                        <TextBlock FontSize="14" Margin="0 0 0 4">根目录</TextBlock>
+                                        <TextBlock FontSize="12" FontWeight="Light">.</TextBlock>
+                                    </StackPanel>
+                                    <svgc:SvgViewbox IsHitTestVisible="False"
+                                                     Grid.Column="2"
+                                                     DockPanel.Dock="Right"
+                                                     Margin="0 0 16 0"
+                                                     HorizontalAlignment="Right"
+                                                     Height="10" Width="10"
+                                                     Source="pack://application:,,,/Assets/Icon/Open.svg" />
+                                </Grid>
+                            </Button.Content>
+                        </Button>
+
+                        <Button Grid.Row="0" Grid.Column="2"
+                                Click="CnnPageLinkButton_Click"
+                                Tag="{x:Static local:CnnLink.Config}"
+                                Style="{StaticResource StartPageLinkButton}">
+                            <Button.Content>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <svgc:SvgViewbox IsHitTestVisible="False"
+                                                     Grid.Column="0"
+                                                     DockPanel.Dock="Left"
+                                                     HorizontalAlignment="Left"
+                                                     Height="20" Width="20"
+                                                     Margin="20 0 16 0"
+                                                     Source="pack://application:,,,/Assets/Icon/Cnn/Cnn_config.svg" />
+                                    <StackPanel Grid.Column="1" Orientation="Vertical"
+                                                VerticalAlignment="Center">
+                                        <TextBlock FontSize="14" Margin="0 0 0 4">配置文件夹</TextBlock>
+                                        <TextBlock FontSize="12" FontWeight="Light">./config</TextBlock>
+                                    </StackPanel>
+                                    <svgc:SvgViewbox IsHitTestVisible="False"
+                                                     Grid.Column="2"
+                                                     DockPanel.Dock="Right"
+                                                     Margin="0 0 16 0"
+                                                     HorizontalAlignment="Right"
+                                                     Height="10" Width="10"
+                                                     Source="pack://application:,,,/Assets/Icon/Open.svg" />
+                                </Grid>
+                            </Button.Content>
+                        </Button>
+
+                        <Button Grid.Row="0" Grid.Column="3"
+                                Click="CnnPageLinkButton_Click"
+                                Tag="{x:Static local:CnnLink.Raw}"
+                                Style="{StaticResource StartPageLinkButton}">
+                            <Button.Content>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <svgc:SvgViewbox IsHitTestVisible="False"
+                                                     Grid.Column="0"
+                                                     DockPanel.Dock="Left"
+                                                     HorizontalAlignment="Left"
+                                                     Height="20" Width="20"
+                                                     Margin="20 0 16 0"
+                                                     Source="pack://application:,,,/Assets/Icon/Cnn/Cnn_raw.svg" />
+                                    <StackPanel Grid.Column="1" Orientation="Vertical"
+                                                VerticalAlignment="Center">
+                                        <TextBlock FontSize="14" Margin="0 0 0 4">原始数据文件夹</TextBlock>
+                                        <TextBlock FontSize="12" FontWeight="Light">./raw</TextBlock>
+                                    </StackPanel>
+                                    <svgc:SvgViewbox IsHitTestVisible="False"
+                                                     Grid.Column="2"
+                                                     DockPanel.Dock="Right"
+                                                     Margin="0 0 16 0"
+                                                     HorizontalAlignment="Right"
+                                                     Height="10" Width="10"
+                                                     Source="pack://application:,,,/Assets/Icon/Open.svg" />
+                                </Grid>
+                            </Button.Content>
+                        </Button>
+
+                        <Button Grid.Row="1" Grid.Column="0"
+                                Click="CnnPageLinkButton_Click"
+                                Tag="{x:Static local:CnnLink.Wav}"
+                                Style="{StaticResource StartPageLinkButton}">
+                            <Button.Content>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <svgc:SvgViewbox IsHitTestVisible="False"
+                                                     Grid.Column="0"
+                                                     DockPanel.Dock="Left"
+                                                     HorizontalAlignment="Left"
+                                                     Height="20" Width="20"
+                                                     Margin="20 0 16 0"
+                                                     Source="pack://application:,,,/Assets/Icon/Cnn/Cnn_wav.svg" />
+                                    <StackPanel Grid.Column="1" Orientation="Vertical"
+                                                VerticalAlignment="Center">
+                                        <TextBlock FontSize="14" Margin="0 0 0 4">Wav文件夹</TextBlock>
+                                        <TextBlock FontSize="12" FontWeight="Light">./wav</TextBlock>
+                                    </StackPanel>
+                                    <svgc:SvgViewbox IsHitTestVisible="False"
+                                                     Grid.Column="2"
+                                                     DockPanel.Dock="Right"
+                                                     Margin="0 0 16 0"
+                                                     HorizontalAlignment="Right"
+                                                     Height="10" Width="10"
+                                                     Source="pack://application:,,,/Assets/Icon/Open.svg" />
+                                </Grid>
+                            </Button.Content>
+                        </Button>
+
+                        <Button Grid.Row="1" Grid.Column="1"
+                                Click="CnnPageLinkButton_Click"
+                                Tag="{x:Static local:CnnLink.Dataset}"
+                                Style="{StaticResource StartPageLinkButton}">
+                            <Button.Content>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <svgc:SvgViewbox IsHitTestVisible="False"
+                                                     Grid.Column="0"
+                                                     DockPanel.Dock="Left"
+                                                     HorizontalAlignment="Left"
+                                                     Height="20" Width="20"
+                                                     Margin="20 0 16 0"
+                                                     Source="pack://application:,,,/Assets/Icon/Cnn/Cnn_dataset.svg" />
+                                    <StackPanel Grid.Column="1" Orientation="Vertical"
+                                                VerticalAlignment="Center">
+                                        <TextBlock FontSize="14" Margin="0 0 0 4">数据集文件夹</TextBlock>
+                                        <TextBlock FontSize="12" FontWeight="Light">./dataset</TextBlock>
+                                    </StackPanel>
+                                    <svgc:SvgViewbox IsHitTestVisible="False"
+                                                     Grid.Column="2"
+                                                     DockPanel.Dock="Right"
+                                                     Margin="0 0 16 0"
+                                                     HorizontalAlignment="Right"
+                                                     Height="10" Width="10"
+                                                     Source="pack://application:,,,/Assets/Icon/Open.svg" />
+                                </Grid>
+                            </Button.Content>
+                        </Button>
+
+                        <Button Grid.Row="1" Grid.Column="2"
+                                Click="CnnPageLinkButton_Click"
+                                Tag="{x:Static local:CnnLink.Logs}"
+                                Style="{StaticResource StartPageLinkButton}">
+                            <Button.Content>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <svgc:SvgViewbox IsHitTestVisible="False"
+                                                     Grid.Column="0"
+                                                     DockPanel.Dock="Left"
+                                                     HorizontalAlignment="Left"
+                                                     Height="20" Width="20"
+                                                     Margin="20 0 16 0"
+                                                     Source="pack://application:,,,/Assets/Icon/Cnn/Cnn_logs.svg" />
+                                    <StackPanel Grid.Column="1" Orientation="Vertical"
+                                                VerticalAlignment="Center">
+                                        <TextBlock FontSize="14" Margin="0 0 0 4">日志文件夹</TextBlock>
+                                        <TextBlock FontSize="12" FontWeight="Light">./logs</TextBlock>
+                                    </StackPanel>
+                                    <svgc:SvgViewbox IsHitTestVisible="False"
+                                                     Grid.Column="2"
+                                                     DockPanel.Dock="Right"
+                                                     Margin="0 0 16 0"
+                                                     HorizontalAlignment="Right"
+                                                     Height="10" Width="10"
+                                                     Source="pack://application:,,,/Assets/Icon/Open.svg" />
+                                </Grid>
+                            </Button.Content>
+                        </Button>
+
+                        <Button Grid.Row="1" Grid.Column="3"
+                                Click="CnnPageLinkButton_Click"
+                                Tag="{x:Static local:CnnLink.Inference}"
+                                Style="{StaticResource StartPageLinkButton}">
+                            <Button.Content>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <svgc:SvgViewbox IsHitTestVisible="False"
+                                                     Grid.Column="0"
+                                                     DockPanel.Dock="Left"
+                                                     HorizontalAlignment="Left"
+                                                     Height="20" Width="20"
+                                                     Margin="20 0 16 0"
+                                                     Source="pack://application:,,,/Assets/Icon/Cnn/Cnn_inference.svg" />
+                                    <StackPanel Grid.Column="1" Orientation="Vertical"
+                                                VerticalAlignment="Center">
+                                        <TextBlock FontSize="14" Margin="0 0 0 4">推理文件夹</TextBlock>
+                                        <TextBlock FontSize="12" FontWeight="Light">./inference</TextBlock>
+                                    </StackPanel>
+                                    <svgc:SvgViewbox IsHitTestVisible="False"
+                                                     Grid.Column="2"
+                                                     DockPanel.Dock="Right"
+                                                     Margin="0 0 16 0"
+                                                     HorizontalAlignment="Right"
+                                                     Height="10" Width="10"
+                                                     Source="pack://application:,,,/Assets/Icon/Open.svg" />
+                                </Grid>
+                            </Button.Content>
+                        </Button>
+                    </Grid>
+                </Grid>
+
+                <!--导入数据集部分-->
+                <Grid Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Grid Row="0" Margin="0 12">
+                        <TextBlock FontSize="16" FontWeight="Medium">
+                            数据集
+                        </TextBlock>
+                    </Grid>
+
+                    <Grid Row="1">
+                        <Border Style="{StaticResource TextCardBorder}">
+                            <TextBlock x:Name="DatasetImportTextBlock" Style="{StaticResource TextCardText}" />
+                        </Border>
+                    </Grid>
+
+                    <Grid Row="2" Margin="0 0 0 8">
+                        <Button Style="{StaticResource CnnPageLoadDatasetButton}"
+                                FontSize="14"
+                                Click="CnnPageLoadButton_Click"
+                                Padding="0 8">
+                            导入数据集
+                        </Button>
+                    </Grid>
+
+                    <Grid Row="3" Margin="0 0 0 8">
+                        <Button Style="{StaticResource CnnPageRefreshDatasetButton}"
+                                FontSize="14"
+                                Click="CnnPageRefreshButton_Click"
+                                Padding="0 8">
+                            重载数据集
+                        </Button>
+                    </Grid>
+
+                    <!-- 数据文件夹树形可视化 -->
+                    <Grid Row="4" MaxHeight="180">
+                        <ScrollViewer HorizontalScrollBarVisibility="Hidden"
+                                      VerticalScrollBarVisibility="Auto" Template="{StaticResource CustomScrollViewer}">
+                            <StackPanel x:Name="DatasetStackPanel" Visibility="Collapsed" />
+                        </ScrollViewer>
+
+
+                    </Grid>
+                </Grid>
+
+                <Grid Row="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Grid Row="0" Margin="0 12">
+                        <TextBlock FontSize="16" FontWeight="Medium">
+                            训练预处理
+                        </TextBlock>
+                    </Grid>
+
+                    <Border Grid.Row="1" Style="{StaticResource TextCardBorder}" Padding="12">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="3*" />
+                                <ColumnDefinition Width="3*" />
+                                <ColumnDefinition Width="3*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Grid Column="0">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <TextBlock Text="音频格式" FontSize="14" Margin="0 0 12 0 " VerticalAlignment="Center" TextAlignment="Center"/>
+                                    <ComboBox ItemsSource="{Binding Source={StaticResource AudioType}}"
+                                              SelectedItem="{Binding SelectedAudioType}"
+                                              Style="{StaticResource CustomComboBox}"
+                                              Foreground="White" />
+                                </StackPanel>
+                            </Grid>
+                            
+                            <Grid Column="1">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                    <TextBlock Text="音频切片" FontSize="14" Margin="0 0 12 0" TextAlignment="Center" VerticalAlignment="Center" />
+                                    
+                                </StackPanel>
+                            </Grid>
+                            
+                            <Grid Column="2"></Grid>
+                        </Grid>
+                    </Border>
+
+                </Grid>
+
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</Page>

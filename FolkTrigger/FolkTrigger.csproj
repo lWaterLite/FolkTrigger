@@ -1,0 +1,83 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net7.0-windows</TargetFramework>
+        <Nullable>enable</Nullable>
+        <UseWPF>true</UseWPF>
+        <UseWindowsForms>true</UseWindowsForms>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="SharpVectors" Version="1.8.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Assets\Icon\Minimize.svg" />
+      <Resource Include="Assets\Icon\Cnn\Cnn.svg" />
+      <Resource Include="Assets\Icon\Cnn\Cnn_folder.svg" />
+      <Resource Include="Assets\Icon\Cnn\Cnn_readme.svg" />
+      <Resource Include="Assets\Icon\Minimize.svg" />
+      <None Remove="Assets\Icon\Maximize.svg" />
+      <Resource Include="Assets\Icon\Maximize.svg" />
+      <None Remove="Assets\Icon\Close.svg" />
+      <Resource Include="Assets\Icon\Close.svg" />
+      <None Remove="Assets\Icon\Select-2.svg" />
+      <None Remove="Assets\Icon\Start.svg" />
+      <Resource Include="Assets\Icon\Start.svg" />
+      <None Remove="Assets\Icon\Svc.svg" />
+      <Resource Include="Assets\Icon\Svc.svg" />
+      <None Remove="Assets\Icon\Cnn.svg" />
+      <None Remove="Assets\Icon\Config.svg" />
+      <Resource Include="Assets\Icon\Config.svg" />
+      <None Remove="Assets\Image\1638087331855.png" />
+      <None Remove="Assets\Image\start_1.png" />
+      <Resource Include="Assets\Image\start_1.png" />
+      <None Remove="Assets\Image\start_2.png" />
+      <Resource Include="Assets\Image\start_2.png" />
+      <None Remove="Assets\Icon\Start_readme.svg" />
+      <Resource Include="Assets\Icon\Start_readme.svg" />
+      <None Remove="Assets\Icon\Open.svg" />
+      <Resource Include="Assets\Icon\Open.svg" />
+      <None Remove="Assets\Icon\Cnn_readme.svg" />
+      <None Remove="Assets\Icon\Svc_readme.svg" />
+      <Resource Include="Assets\Icon\Svc_readme.svg" />
+      <None Update="readme.md">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Remove="Assets\Icon\Start_folder.svg" />
+      <Resource Include="Assets\Icon\Start_folder.svg" />
+      <None Remove="Assets\Icon\Cnn_folder.svg" />
+      <None Remove="Assets\Icon\Svc_folder.svg" />
+      <Resource Include="Assets\Icon\Svc_folder.svg" />
+      <None Remove="Assets\Icon\Cnn\Cnn_config.svg" />
+      <Resource Include="Assets\Icon\Cnn\Cnn_config.svg" />
+      <None Remove="Assets\Icon\Cnn\Cnn_dataset.svg" />
+      <Resource Include="Assets\Icon\Cnn\Cnn_dataset.svg" />
+      <None Remove="Assets\Icon\Cnn\Cnn_inference.svg" />
+      <Resource Include="Assets\Icon\Cnn\Cnn_inference.svg" />
+      <None Remove="Assets\Icon\Cnn\Cnn_logs.svg" />
+      <Resource Include="Assets\Icon\Cnn\Cnn_logs.svg" />
+      <None Remove="Assets\Icon\Cnn\Cnn_process.svg" />
+      <None Remove="Assets\Icon\Cnn\Cnn_raw.svg" />
+      <Resource Include="Assets\Icon\Cnn\Cnn_raw.svg" />
+      <None Remove="Assets\Icon\Cnn\Cnn_wav.svg" />
+      <Resource Include="Assets\Icon\Cnn\Cnn_wav.svg" />
+      <None Remove="Assets\Icon\Cnn\Node_collapse.svg" />
+      <Resource Include="Assets\Icon\Cnn\Node_collapse.svg" />
+      <None Remove="Assets\Icon\Cnn\Node_expand.svg" />
+      <Resource Include="Assets\Icon\Cnn\Node_expand.svg" />
+      <None Remove="Assets\Font\icon.ttf" />
+      <Resource Include="Assets\Font\icon.ttf" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Controls\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\FTCustomControlLibrary\FTCustomControlLibrary.csproj" />
+      <ProjectReference Include="..\FT_Switcher\FT_Switcher.csproj" />
+    </ItemGroup>
+
+</Project>
