@@ -416,6 +416,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
                     <Grid Row="0" Margin="0 12">
@@ -433,7 +434,7 @@
                             </Grid.ColumnDefinitions>
 
                             <Grid Column="0">
-                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                                     <TextBlock Text="音频格式" FontSize="14" Margin="0 0 12 0 " VerticalAlignment="Center" TextAlignment="Center"/>
                                     <ComboBox ItemsSource="{Binding Source={StaticResource AudioType}}"
                                               SelectedItem="{Binding SelectedAudioType}"
@@ -443,15 +444,41 @@
                             </Grid>
                             
                             <Grid Column="1">
-                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                                     <TextBlock Text="音频切片" FontSize="14" Margin="0 0 12 0" TextAlignment="Center" VerticalAlignment="Center" />
-                                    
+                                    <ft:Switcher x:Name="SlicerSwitcher" 
+                                                 Height="28" Width="76"
+                                                 BorderBrush="#5c5c5c"
+                                                 FontSize="14"
+                                                 Foreground="White"
+                                                 ButtonColor="White"
+                                                 IsChecked="True"/>
                                 </StackPanel>
                             </Grid>
                             
-                            <Grid Column="2"></Grid>
+                            <Grid Column="2">
+                                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                    <TextBlock Text="格式转换" FontSize="14" Margin="0 0 12 0" TextAlignment="Center" VerticalAlignment="Center" />
+                                    <ft:Switcher x:Name="ConverterSwitcher" 
+                                                 Height="28" Width="76"
+                                                 BorderBrush="#5c5c5c"
+                                                 FontSize="14"
+                                                 Foreground="White"
+                                                 ButtonColor="White"
+                                                 IsChecked="True"/>
+                                </StackPanel>
+                            </Grid>
                         </Grid>
                     </Border>
+                    
+                    <Grid Row="2" Margin="0 0 0 0">
+                        <Button Style="{StaticResource CnnPageLoadDatasetButton}"
+                                FontSize="14"
+                                Padding="0 8"
+                                Click="PreprocessButton_Click">
+                            运行预处理
+                        </Button>
+                    </Grid>
 
                 </Grid>
 
