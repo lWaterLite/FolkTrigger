@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,7 +19,7 @@ public partial class CnnPage : Page
 
     private static readonly string BasePath = AppDomain.CurrentDomain.BaseDirectory + @"MetaFolk_CNN\";
 
-    private string _datasetName = String.Empty;
+    private string _datasetName = string.Empty;
     
     public CnnPage()
     {
@@ -65,6 +66,8 @@ public partial class CnnPage : Page
             case CnnLink.Inference:
                 Process.Start("explorer", BasePath + "inference");
                 break;
+            default:
+                return;
         }
     }
 
@@ -75,7 +78,7 @@ public partial class CnnPage : Page
 
     private async void CnnPageLoadButton_Click(object sender, RoutedEventArgs eventArgs)
     {
-        FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
+        FolderBrowserDialog folderBrowserDialog = new();
         folderBrowserDialog.InitialDirectory = BasePath;
         folderBrowserDialog.ShowDialog();
         string selectedPath = folderBrowserDialog.SelectedPath;
@@ -96,8 +99,7 @@ public partial class CnnPage : Page
             $"--audio-format={((string)AudioTypeComboBox.SelectedItem).ToLower()} " +
             $"{((bool)ConverterSwitcher.IsChecked! ? "" : "--no-convert")} " +
             $"{((bool)SlicerSwitcher.IsChecked! ? "" : "--no-slice")}";
-        string Echo(string executedCommand) => $"echo {"executing command: " + executedCommand}";
-        ProcessStartInfo start = new ProcessStartInfo
+        ProcessStartInfo start = new()
         {
             FileName = "cmd.exe",
             Arguments = $"/c \"{Echo(virtualenvCommand)} & {virtualenvCommand} " +
@@ -112,38 +114,39 @@ public partial class CnnPage : Page
         process.Start();
 
         await process.WaitForExitAsync(); // 等待进程结束
+        return;
+        
+        string Echo(string executedCommand) => $"echo {"executing command: " + executedCommand}";
     }
 
     #endregion
 
     private async Task CopyDatasetAsync(string srcDir, string destDir)
     {
-        await Task.Run((() =>
+        await Task.Run(() =>
         {
             GetFilesAndDirs(srcDir, destDir);
-        }));
+        });
     }
     
     private void GetFilesAndDirs(string srcDir,string destDir)
     {
-        if (!Directory.Exists(destDir))//若目标文件夹不存在
+        if (Directory.Exists(destDir)) return; //若目标文件夹不存在
+        Directory.CreateDirectory(destDir);//创建目标文件夹                                                  
+        string[] files = Directory.GetFiles(srcDir);//获取源文件夹中的所有文件完整路径
+        foreach (string path in files)          //遍历文件     
         {
-            Directory.CreateDirectory(destDir);//创建目标文件夹                                                  
-            string[] files = Directory.GetFiles(srcDir);//获取源文件夹中的所有文件完整路径
-            foreach (string path in files)          //遍历文件     
-            {
-                var fileInfo = new FileInfo(path);
-                var newPath = destDir + fileInfo.Name;
-                File.Copy(path, newPath, true);
-            }
-            string[] dirs = Directory.GetDirectories(srcDir);
-            foreach (string path in dirs)        //遍历文件夹
-            {
-                DirectoryInfo directory = new DirectoryInfo(path);
-                string newDir = destDir + directory.Name;
-                GetFilesAndDirs(path+"\\", newDir+"\\");
-            }
-        }          
+            FileInfo fileInfo = new(path);
+            string newPath = destDir + fileInfo.Name;
+            File.Copy(path, newPath, true);
+        }
+        string[] dirs = Directory.GetDirectories(srcDir);
+        foreach (string path in dirs)        //遍历文件夹
+        {
+            DirectoryInfo directory = new DirectoryInfo(path);
+            string newDir = destDir + directory.Name;
+            GetFilesAndDirs(path+"\\", newDir+"\\");
+        }
     }
 
     #region RefreshDataset
@@ -154,15 +157,13 @@ public partial class CnnPage : Page
         DatasetStackPanel.Visibility = Visibility.Collapsed;
         
         bool isDatasetLoaded = RefreshDataset();
-        if (isDatasetLoaded)
+        if (!isDatasetLoaded) return;
+        foreach (Border border in CreateTagCard(_datasetName))
         {
-            foreach (Border border in CreateTagCard(_datasetName))
-            {
-                DatasetStackPanel.Children.Add(border);
-            }
-
-            DatasetStackPanel.Visibility = Visibility.Visible;
+            DatasetStackPanel.Children.Add(border);
         }
+
+        DatasetStackPanel.Visibility = Visibility.Visible;
     }
 
     private bool RefreshDataset()
@@ -170,38 +171,35 @@ public partial class CnnPage : Page
         DirectoryInfo directoryInfo = new DirectoryInfo(BasePath + "raw");
         DirectoryInfo[] subDirectories = directoryInfo.GetDirectories();
 
-        if (subDirectories.Length == 0)
+        switch (subDirectories.Length)
         {
-            _datasetName = String.Empty;
-            DatasetImportTextBlock.Text = "错误: 未检测到数据集，请手工或点击按钮导入数据集";
-            return false;
-        }
-
-        if (subDirectories.Length == 1)
-        {
-            DirectoryInfo[] tagDirectories = subDirectories[0].GetDirectories();
-            if (tagDirectories.Length == 0)
-            {
-                _datasetName = String.Empty;
-                DatasetImportTextBlock.Text = "错误: 检测到了不符合格式的数据集根目录，请重新导入数据集";
+            case 0:
+                _datasetName = string.Empty;
+                DatasetImportTextBlock.Text = "错误: 未检测到数据集，请手工或点击按钮导入数据集";
                 return false;
+            case 1:
+            {
+                DirectoryInfo[] tagDirectories = subDirectories[0].GetDirectories();
+                if (tagDirectories.Length == 0)
+                {
+                    _datasetName = string.Empty;
+                    DatasetImportTextBlock.Text = "错误: 检测到了不符合格式的数据集根目录，请重新导入数据集";
+                    return false;
+                }
+                _datasetName = subDirectories[0].Name;
+                DatasetImportTextBlock.Text = "成功导入数据集。\n当前数据集为: " + _datasetName;
+                return true;
             }
-            _datasetName = subDirectories[0].Name;
-            DatasetImportTextBlock.Text = "成功导入数据集。\n当前数据集为: " + _datasetName;
-            return true;
         }
 
-        foreach (DirectoryInfo subDirectory in subDirectories)
+        if (subDirectories.Select(subDirectory => subDirectory.GetDirectories()).Any(tagDirectories => tagDirectories.Length != 0))
         {
-            DirectoryInfo[] tagDirectories = subDirectory.GetDirectories();
-            if (tagDirectories.Length == 0)
-                continue;
             _datasetName = subDirectories[0].Name;
             DatasetImportTextBlock.Text = "警告: 检测到多个数据集，仅读取第一个符合要求数据集。\n当前数据集为: " + _datasetName;
             return false;
         }
 
-        _datasetName = String.Empty;
+        _datasetName = string.Empty;
         DatasetImportTextBlock.Text = "错误: 检测到了多个数据集根目录，但是没有一个符合格式要求，请重新导入一个数据集";
         return false;
     }
@@ -216,19 +214,19 @@ public partial class CnnPage : Page
         Style? borderStyle = FindResource("TextCardBorder") as Style;
         Style? textStyle = FindResource("TextCardText") as Style;
         
-        DirectoryInfo rootDirectoryInfo = new DirectoryInfo(BasePath + "raw\\" + datasetName);
+        DirectoryInfo rootDirectoryInfo = new(BasePath + "raw\\" + datasetName);
         DirectoryInfo[] tagDirectoryInfos = rootDirectoryInfo.GetDirectories();
         foreach (DirectoryInfo tagDirectoryInfo in tagDirectoryInfos)
         {
             string tagName = tagDirectoryInfo.Name;
             int fileNumber = tagDirectoryInfo.GetFiles().Length;
             string text = $"标签: {tagName}, 数量: {fileNumber}";
-            TextBlock textBlock = new TextBlock
+            TextBlock textBlock = new() 
             {
                 Style = textStyle,
                 Text = text
             };
-            Border border = new Border
+            Border border = new()
             {
 
                 Style = borderStyle,
@@ -256,6 +254,14 @@ public enum CnnLink
     Wav
 }
 
+public enum AudioType
+{
+    Mp3,
+    Aac,
+    Flac,
+    Wav
+}
+
 public class CnnPageViewModel: INotifyPropertyChanged
 { 
     public event PropertyChangedEventHandler? PropertyChanged;
@@ -270,21 +276,11 @@ public class CnnPageViewModel: INotifyPropertyChanged
         get => _selectedAudioType;
         set
         {
-            if (_selectedAudioType != value)
-            {
-                _selectedAudioType = value;
-                OnPropertyChanged(nameof(SelectedAudioType));   
-            }
+            if (_selectedAudioType == value) return;
+            _selectedAudioType = value;
+            OnPropertyChanged(nameof(SelectedAudioType));
         }
     }
-}
-
-public enum AudioType
-{
-    Mp3,
-    Aac,
-    Flac,
-    Wav
 }
 
 // #region DatasetTreeView
