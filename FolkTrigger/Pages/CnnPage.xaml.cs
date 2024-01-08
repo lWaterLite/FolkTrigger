@@ -23,8 +23,7 @@ public partial class CnnPage : Page
     public CnnPage()
     {
         InitializeComponent();
-
-        DataContext = new CnnPageViewModel();
+        
         if (!Directory.Exists(BasePath))
             Utils.Utils.ExceptionHandler(new Exception("Error: The sub project MetaFolk_CNN is missing!"), WarningTextBlock);
 
@@ -91,12 +90,20 @@ public partial class CnnPage : Page
     private async void PreprocessButton_Click(object sender, RoutedEventArgs eventArgs)
     {
         string virtualenvCommand = BasePath + @"venv\Scripts\activate";
-        string pythonCommand = $"python {BasePath + "1_gen_config.py"} --dataset='{_datasetName}'";
-        ProcessStartInfo start = new() 
+        string configCommand = $"python {BasePath + "1_gen_config.py"} --dataset={_datasetName}";
+        string preprocessCommand =
+            $"python {BasePath + "2_dataset_preprocess.py"} " +
+            $"--audio-format={((string)AudioTypeComboBox.SelectedItem).ToLower()} " +
+            $"{((bool)ConverterSwitcher.IsChecked! ? "" : "--no-convert")} " +
+            $"{((bool)SlicerSwitcher.IsChecked! ? "" : "--no-slice")}";
+        string Echo(string executedCommand) => $"echo {"executing command: " + executedCommand}";
+        ProcessStartInfo start = new ProcessStartInfo
         {
-            FileName = "cmd.exe", // 指定python解释器的路径
-            Arguments = $"/c \"{virtualenvCommand} & cls & {pythonCommand} & pause\"", // 执行Python脚本并暂停, // 指定脚本路径
-            UseShellExecute = true, // 设置为false以重定向输入输出, // 重定向标准输出
+            FileName = "cmd.exe",
+            Arguments = $"/c \"{Echo(virtualenvCommand)} & {virtualenvCommand} " +
+                        $"& {Echo(configCommand)} & {configCommand} " +
+                        $"& {Echo(preprocessCommand)} & {preprocessCommand} & pause\"",
+            UseShellExecute = true, // 设置为false以重定向输入输出
             CreateNoWindow = false // 不创建新窗口
         };
 

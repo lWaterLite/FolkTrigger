@@ -10,9 +10,11 @@
       mc:Ignorable="d"
       Title="CnnPage"
       d:DesignHeight="720"
-      d:DesignWidth="1216" d:DataContext="{local:CnnPageViewModel}">
+      d:DesignWidth="1216">
 
     <Page.Resources>
+        <local:CnnPageViewModel x:Key="CnnPageViewModel" />
+        
         <Style x:Key="TextCardBorder" TargetType="{x:Type Border}">
             <Setter Property="Background" Value="#343434" />
             <Setter Property="BorderBrush" Value="#6a6a6a" />
@@ -39,7 +41,8 @@
 
     </Page.Resources>
 
-    <Grid Background="Transparent">
+    <Grid Background="Transparent"
+          DataContext="{Binding Source={StaticResource CnnPageViewModel}}">
         <DockPanel ZIndex="2" LastChildFill="False">
             <TextBlock x:Name="WarningTextBlock"
                        DockPanel.Dock="Bottom"
@@ -436,8 +439,9 @@
                             <Grid Column="0">
                                 <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
                                     <TextBlock Text="音频格式" FontSize="14" Margin="0 0 12 0 " VerticalAlignment="Center" TextAlignment="Center"/>
-                                    <ComboBox ItemsSource="{Binding Source={StaticResource AudioType}}"
-                                              SelectedItem="{Binding SelectedAudioType}"
+                                    <ComboBox x:Name="AudioTypeComboBox" 
+                                              ItemsSource="{Binding Source={StaticResource AudioType}}"
+                                              SelectedItem="{Binding Path=SelectedAudioType}"
                                               Style="{StaticResource CustomComboBox}"
                                               Foreground="White" />
                                 </StackPanel>
