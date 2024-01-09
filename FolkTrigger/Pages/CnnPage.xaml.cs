@@ -109,7 +109,7 @@ public partial class CnnPage : Page
             CreateNoWindow = false // 不创建新窗口
         };
 
-        using Process process = new Process();
+        using Process process = new();
         process.StartInfo = start;
         process.Start();
 
@@ -119,14 +119,31 @@ public partial class CnnPage : Page
         string Echo(string executedCommand) => $"echo {"executing command: " + executedCommand}";
     }
 
+    private async void TrainingButton_Click(object sender, RoutedEventArgs eventArgs)
+    {
+        string virtualenvCommand = BasePath + @"venv\Scripts\activate";
+        string trainingCommand = $"python {BasePath + "3_train.py"} " +
+                                 $"{((bool)ValidateSwitcher.IsChecked! ? "" : "--no-validate")} " +
+                                 $"{((bool)RecoverSwitcher.IsChecked! ? "" : "--no-recover")}";
+        ProcessStartInfo start = new()
+        {
+            FileName = "cmd.exe",
+            Arguments = $"/c \"echo {"executing command: " + trainingCommand} " +
+                        $"& {virtualenvCommand} & {trainingCommand} & pause\""
+        };
+
+        using Process process = new();
+        process.StartInfo = start;
+        process.Start();
+
+        await process.WaitForExitAsync();
+    }
+
     #endregion
 
     private async Task CopyDatasetAsync(string srcDir, string destDir)
     {
-        await Task.Run(() =>
-        {
-            GetFilesAndDirs(srcDir, destDir);
-        });
+        await Task.Run(() => GetFilesAndDirs(srcDir, destDir));
     }
     
     private void GetFilesAndDirs(string srcDir,string destDir)

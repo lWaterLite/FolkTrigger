@@ -102,8 +102,8 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border x:Name="Border" Background="#4caf50" 
-                            BorderThickness="1" 
+                    <Border x:Name="Border" Background="#26a283" 
+                            BorderThickness="2" 
                             CornerRadius="8" 
                             Padding="{TemplateBinding Padding}"
                             BorderBrush="#aaaaaa">
@@ -113,7 +113,7 @@
                     
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Border" Property="Background" Value="#388e3c" />
+                            <Setter TargetName="Border" Property="Background" Value="#247761" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -126,8 +126,8 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border x:Name="Border" Background="#5c6bc0" 
-                            BorderThickness="1" 
+                    <Border x:Name="Border" Background="#3d6b6f" 
+                            BorderThickness="2" 
                             CornerRadius="8" 
                             Padding="{TemplateBinding Padding}"
                             BorderBrush="#aaaaaa">
@@ -137,7 +137,7 @@
                     
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Border" Property="Background" Value="#3f51b5" />
+                            <Setter TargetName="Border" Property="Background" Value="#355b5f" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
