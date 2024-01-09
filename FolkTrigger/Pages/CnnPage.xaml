@@ -385,7 +385,8 @@
 
                     <Grid Row="1">
                         <Border Style="{StaticResource TextCardBorder}">
-                            <TextBlock x:Name="DatasetImportTextBlock" Style="{StaticResource TextCardText}" />
+                            <TextBlock Style="{StaticResource TextCardText}"
+                                       Text="{Binding DatasetImportText, Mode=OneWay}"/>
                         </Border>
                     </Grid>
 
