@@ -133,7 +133,7 @@ namespace FTCustomControlLibrary
 
         public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            throw new Exception("ConvertBack Not Allowed");
         }
     }
         
@@ -142,12 +142,12 @@ namespace FTCustomControlLibrary
         public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             if (value == null) return Visibility.Hidden;
-            return (bool)value ? Visibility.Visible : Visibility.Hidden;
+            throw new Exception("ConvertBack Not Allowed");
         }
 
         public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            throw new Exception("ConvertBack Not Allowed");
         }
     }
         
@@ -162,7 +162,7 @@ namespace FTCustomControlLibrary
 
         public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            throw new Exception("ConvertBack Not Allowed");
         }
     }
 
