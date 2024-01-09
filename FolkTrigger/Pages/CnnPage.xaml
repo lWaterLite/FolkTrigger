@@ -9,7 +9,7 @@
       xmlns:local="clr-namespace:FolkTrigger.Pages"
       mc:Ignorable="d"
       Title="CnnPage"
-      d:DesignHeight="900"
+      d:DesignHeight="1200"
       d:DesignWidth="1216">
 
     <Page.Resources>
@@ -26,7 +26,7 @@
         <Style x:Key="TextCardText" TargetType="{x:Type TextBlock}">
             <Setter Property="FontFamily" Value="Microsoft Yahei" />
             <Setter Property="Foreground" Value="White" />
-            <Setter Property="Margin" Value="4" />
+            <Setter Property="Margin" Value="4 12" />
             <Setter Property="FontSize" Value="14" />
             <Setter Property="TextAlignment" Value="Center" />
         </Style>
@@ -59,6 +59,7 @@
             <!--页面整体控制-->
             <Grid Margin="24 0">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -583,6 +584,65 @@
                                 Padding="0 8"
                                 Click="CompressModelButton_Click">
                             压缩模型
+                        </Button>
+                    </Grid>
+                </Grid>
+                
+                <Grid Row="5" Margin="0 0 0 20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    
+                    <Grid Row="0" Margin="0 0 0 12">
+                        <TextBlock FontSize="16" FontWeight="Medium">
+                            模型推理
+                        </TextBlock>
+                    </Grid>
+                    
+                    <Border Grid.Row="1" Style="{StaticResource TextCardBorder}">
+                        <TextBlock Style="{StaticResource TextCardText}" 
+                                   Text="{Binding SelectedInferenceModelPath, Mode=OneWay}"/>
+                    </Border>
+                    
+                    <Border Grid.Row="2" Style="{StaticResource TextCardBorder}">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <TextBlock Style="{StaticResource TextCardText}"
+                                       HorizontalAlignment="Center"
+                                       Text="当前等待推理的数据量: "/>
+                            <TextBlock Style="{StaticResource TextCardText}" 
+                                       Text="{Binding InferenceDataCount}"/>
+                        </StackPanel>
+                    </Border>
+                    
+                    <Grid Row="3" Margin="0 0 0 8">
+                        <Button Style="{StaticResource CnnPagePrimaryButton}"
+                                FontSize="14"
+                                Padding="0 8"
+                                Click="SelectInferenceModelButton_Click">
+                            选择模型
+                        </Button>
+                    </Grid>
+                    
+                    <Grid Row="4" Margin="0 0 0 8">
+                        <Button Style="{StaticResource CnnPageSecondaryButton}"
+                                FontSize="14"
+                                Padding="0 8"
+                                Click="ReloadInferenceDataButton_Click">
+                            重载数据
+                        </Button>
+                    </Grid>
+                    
+                    <Grid Row="5">
+                        <Button Style="{StaticResource CnnPagePrimaryButton}"
+                                FontSize="14"
+                                Padding="0 8"
+                                Click="InferenceButton_Click">
+                            开始推理
                         </Button>
                     </Grid>
                 </Grid>

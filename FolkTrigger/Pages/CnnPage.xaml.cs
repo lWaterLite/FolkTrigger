@@ -22,7 +22,7 @@ public partial class CnnPage : Page
 
     private string _datasetName = string.Empty;
 
-    private CnnPageViewModel _viewModel;
+    private readonly CnnPageViewModel _viewModel;
     
     public CnnPage()
     {
@@ -33,6 +33,7 @@ public partial class CnnPage : Page
             Utils.Utils.ExceptionHandler(new Exception("Error: The sub project MetaFolk_CNN is missing!"), WarningTextBlock);
 
         DatasetLoader();
+        Task.Run(() => _viewModel.InferenceDataCount = ReloadInferenceData());
     }
 
     #region RoutedEventMethods
@@ -171,9 +172,46 @@ public partial class CnnPage : Page
         process.Start();
 
         await process.WaitForExitAsync();
-    } 
+    }
+    
+    private void SelectInferenceModelButton_Click(object sender, RoutedEventArgs e)
+    {
+        OpenFileDialog dialog = new()
+        {
+            InitialDirectory = BasePath,
+            Filter = "Checkpoint File (.ckpt)|*.ckpt;*.pt"
+        };
+        if (dialog.ShowDialog() != true) return;
+        _viewModel.SelectedInferenceModelPath = dialog.FileName;
+    }
+
+    private async void ReloadInferenceDataButton_Click(object sender, RoutedEventArgs e)
+    {
+        await Task.Run(() => _viewModel.InferenceDataCount = ReloadInferenceData());
+    }
+
+    private async void InferenceButton_Click(object sender, RoutedEventArgs e)
+    {
+        string virtualenvCommand = BasePath + @"venv\scripts\activate";
+        string inferenceCommand = $"python {BasePath + "5_inference.py"} " +
+                                  $"-m={_viewModel.SelectedInferenceModelPath}";
+        ProcessStartInfo start = new()
+        {
+            FileName = "cmd.exe",
+            Arguments = $"/c \"echo {"executing command: " + inferenceCommand} " +
+                        $"& {virtualenvCommand} & {inferenceCommand} & pause\""
+        };
+
+        using Process process = new();
+        process.StartInfo = start;
+        process.Start();
+
+        await process.WaitForExitAsync();
+    }
 
     #endregion
+
+    #region utils
 
     private async Task CopyDatasetAsync(string srcDir, string destDir)
     {
@@ -200,8 +238,6 @@ public partial class CnnPage : Page
         }
     }
 
-    #region RefreshDataset
-
     private void DatasetLoader()
     {
         DatasetStackPanel.Children.Clear();
@@ -209,10 +245,10 @@ public partial class CnnPage : Page
         
         bool isDatasetLoaded = RefreshDataset();
         if (!isDatasetLoaded) return;
-        foreach (Border border in CreateTagCard(_datasetName))
-        {
-            DatasetStackPanel.Children.Add(border);
-        }
+        // foreach (Border border in CreateTagCard(_datasetName))
+        // {
+        //     DatasetStackPanel.Children.Add(border);
+        // }
 
         DatasetStackPanel.Visibility = Visibility.Visible;
     }
@@ -255,38 +291,45 @@ public partial class CnnPage : Page
         return false;
     }
 
-    #endregion
+    // #region DatasetTreeView
+    //
+    // private List<Border> CreateTagCard(string datasetName)
+    // {
+    //     List<Border> tagCards = new List<Border>();
+    //     Style? borderStyle = FindResource("TextCardBorder") as Style;
+    //     Style? textStyle = FindResource("TextCardText") as Style;
+    //     
+    //     DirectoryInfo rootDirectoryInfo = new(BasePath + "raw\\" + datasetName);
+    //     DirectoryInfo[] tagDirectoryInfos = rootDirectoryInfo.GetDirectories();
+    //     foreach (DirectoryInfo tagDirectoryInfo in tagDirectoryInfos)
+    //     {
+    //         string tagName = tagDirectoryInfo.Name;
+    //         int fileNumber = tagDirectoryInfo.GetFiles().Length;
+    //         string text = $"标签: {tagName}, 数量: {fileNumber}";
+    //         TextBlock textBlock = new() 
+    //         {
+    //             Style = textStyle,
+    //             Text = text
+    //         };
+    //         Border border = new()
+    //         {
+    //
+    //             Style = borderStyle,
+    //             Child = textBlock
+    //         };
+    //         tagCards.Add(border);
+    //     }
+    //
+    //     return tagCards;
+    // }
+    //
+    // #endregion
 
-    #region DatasetTreeView
-
-    private List<Border> CreateTagCard(string datasetName)
+    private int ReloadInferenceData()
     {
-        List<Border> tagCards = new List<Border>();
-        Style? borderStyle = FindResource("TextCardBorder") as Style;
-        Style? textStyle = FindResource("TextCardText") as Style;
-        
-        DirectoryInfo rootDirectoryInfo = new(BasePath + "raw\\" + datasetName);
-        DirectoryInfo[] tagDirectoryInfos = rootDirectoryInfo.GetDirectories();
-        foreach (DirectoryInfo tagDirectoryInfo in tagDirectoryInfos)
-        {
-            string tagName = tagDirectoryInfo.Name;
-            int fileNumber = tagDirectoryInfo.GetFiles().Length;
-            string text = $"标签: {tagName}, 数量: {fileNumber}";
-            TextBlock textBlock = new() 
-            {
-                Style = textStyle,
-                Text = text
-            };
-            Border border = new()
-            {
-
-                Style = borderStyle,
-                Child = textBlock
-            };
-            tagCards.Add(border);
-        }
-
-        return tagCards;
+        DirectoryInfo directoryInfo = new(BasePath + "inference\\raw");
+        int count = directoryInfo.EnumerateFiles("*.wav", SearchOption.TopDirectoryOnly).Count();
+        return count;
     }
 
     #endregion
@@ -326,6 +369,8 @@ public class CnnPageViewModel: INotifyPropertyChanged
 
     private string _selectedAudioType = "Mp3";
     private string _selectedCompressModelPath = "未选择模型";
+    private string _selectedInferenceModelPath = "未选择模型";
+    private int _inferenceDataCount;
 
     public string SelectedAudioType{
         get => _selectedAudioType;
@@ -345,6 +390,28 @@ public class CnnPageViewModel: INotifyPropertyChanged
             if (_selectedCompressModelPath == value) return;
             _selectedCompressModelPath = value;
             OnPropertyChanged(nameof(SelectedCompressModelPath));
+        }
+    }
+
+    public string SelectedInferenceModelPath
+    {
+        get => _selectedInferenceModelPath;
+        set
+        {
+            if (_selectedInferenceModelPath == value) return;
+            _selectedInferenceModelPath = value;
+            OnPropertyChanged(nameof(SelectedInferenceModelPath));
+        }
+    }
+
+    public int InferenceDataCount
+    {
+        get => _inferenceDataCount;
+        set
+        {
+            if (_inferenceDataCount == value) return;
+            _inferenceDataCount = value;
+            OnPropertyChanged(nameof(InferenceDataCount));
         }
     }
 
