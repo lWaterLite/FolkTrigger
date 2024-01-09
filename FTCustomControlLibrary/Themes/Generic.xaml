@@ -47,7 +47,7 @@
                             
                             <TextBlock x:Name="CheckTextBlock"
                                        Grid.Column="0"
-                                       Padding="4 2"
+                                       Padding="8 2"
                                        VerticalAlignment="Center"
                                        HorizontalAlignment="Left"
                                        FontSize="{TemplateBinding FontSize}"
