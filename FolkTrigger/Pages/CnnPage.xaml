@@ -9,7 +9,7 @@
       xmlns:local="clr-namespace:FolkTrigger.Pages"
       mc:Ignorable="d"
       Title="CnnPage"
-      d:DesignHeight="720"
+      d:DesignHeight="900"
       d:DesignWidth="1216">
 
     <Page.Resources>
@@ -41,7 +41,7 @@
 
     </Page.Resources>
 
-    <Grid Background="Transparent"
+    <Grid Background="Transparent" x:Name="MainGrid"
           DataContext="{Binding Source={StaticResource CnnPageViewModel}}">
         <DockPanel ZIndex="2" LastChildFill="False">
             <TextBlock x:Name="WarningTextBlock"
@@ -59,6 +59,7 @@
             <!--页面整体控制-->
             <Grid Margin="24 0">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -388,7 +389,7 @@
                     </Grid>
 
                     <Grid Row="2" Margin="0 0 0 8">
-                        <Button Style="{StaticResource CnnPageLoadDatasetButton}"
+                        <Button Style="{StaticResource CnnPagePrimaryButton}"
                                 FontSize="14"
                                 Click="CnnPageLoadButton_Click"
                                 Padding="0 8">
@@ -397,7 +398,7 @@
                     </Grid>
 
                     <Grid Row="3" Margin="0 0 0 8">
-                        <Button Style="{StaticResource CnnPageRefreshDatasetButton}"
+                        <Button Style="{StaticResource CnnPageSecondaryButton}"
                                 FontSize="14"
                                 Click="CnnPageRefreshButton_Click"
                                 Padding="0 8">
@@ -477,7 +478,7 @@
                     </Border>
                     
                     <Grid Row="2">
-                        <Button Style="{StaticResource CnnPageLoadDatasetButton}"
+                        <Button Style="{StaticResource CnnPagePrimaryButton}"
                                 FontSize="14"
                                 Padding="0 8"
                                 Click="PreprocessButton_Click">
@@ -539,7 +540,7 @@
                     </Border>
                     
                     <Grid Row="2">
-                        <Button Style="{StaticResource CnnPageLoadDatasetButton}"
+                        <Button Style="{StaticResource CnnPagePrimaryButton}"
                                 FontSize="14"
                                 Padding="0 8"
                                 Click="TrainingButton_Click">
@@ -547,6 +548,43 @@
                         </Button>
                     </Grid>
                     
+                </Grid>
+                
+                <Grid Row="4" Margin="0 0 0 20">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    
+                    <Grid Row="0" Margin="0 0 0 12">
+                        <TextBlock FontSize="16" FontWeight="Medium">
+                            模型压缩
+                        </TextBlock>
+                    </Grid>
+                    
+                    <Border Grid.Row="1" Style="{StaticResource TextCardBorder}">
+                        <TextBlock Text="{Binding SelectedCompressModelPath, Mode=OneWay}" Style="{StaticResource TextCardText}" />
+                    </Border>
+                    
+                    <Grid Row="2" Margin="0 0 0 8">
+                        <Button Style="{StaticResource CnnPagePrimaryButton}"
+                                FontSize="14"
+                                Padding="0 8"
+                                Click="SelectCompressModelButton_Click">
+                            选择模型
+                        </Button>
+                    </Grid>
+                    
+                    <Grid Row="3">
+                        <Button Style="{StaticResource CnnPageSecondaryButton}"
+                                FontSize="14"
+                                Padding="0 8"
+                                Click="CompressModelButton_Click">
+                            压缩模型
+                        </Button>
+                    </Grid>
                 </Grid>
 
             </Grid>

@@ -10,6 +10,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Forms.Design;
 using System.Windows.Markup;
+using Microsoft.Win32;
 using FolderBrowserDialog = System.Windows.Forms.FolderBrowserDialog;
 
 namespace FolkTrigger.Pages;
@@ -20,11 +21,14 @@ public partial class CnnPage : Page
     private static readonly string BasePath = AppDomain.CurrentDomain.BaseDirectory + @"MetaFolk_CNN\";
 
     private string _datasetName = string.Empty;
+
+    private CnnPageViewModel _viewModel;
     
     public CnnPage()
     {
         InitializeComponent();
         
+        _viewModel = (MainGrid.DataContext as CnnPageViewModel)!;
         if (!Directory.Exists(BasePath))
             Utils.Utils.ExceptionHandler(new Exception("Error: The sub project MetaFolk_CNN is missing!"), WarningTextBlock);
 
@@ -102,7 +106,7 @@ public partial class CnnPage : Page
         ProcessStartInfo start = new()
         {
             FileName = "cmd.exe",
-            Arguments = $"/c \"{Echo(virtualenvCommand)} & {virtualenvCommand} " +
+            Arguments = $"/c \"{virtualenvCommand} " +
                         $"& {Echo(configCommand)} & {configCommand} " +
                         $"& {Echo(preprocessCommand)} & {preprocessCommand} & pause\"",
             UseShellExecute = true, // 设置为false以重定向输入输出
@@ -138,6 +142,36 @@ public partial class CnnPage : Page
 
         await process.WaitForExitAsync();
     }
+
+    private void SelectCompressModelButton_Click(object sender, RoutedEventArgs e)
+    {
+        OpenFileDialog dialog = new()
+        {
+            InitialDirectory = BasePath,
+            Filter = "Checkpoint File (.ckpt)|*.ckpt"
+        };
+        if (dialog.ShowDialog() != true) return;
+        _viewModel.SelectedCompressModelPath = dialog.FileName;
+    }
+
+    private async void CompressModelButton_Click(object sender, RoutedEventArgs e)
+    {
+        string virtualenvCommand = BasePath + @"venv\Scripts\activate";
+        string compressCommand = $"python {BasePath + "4_compress_model.py"} " +
+                                 $"-m={_viewModel.SelectedCompressModelPath}";
+        ProcessStartInfo start = new()
+        {
+            FileName = "cmd.exe",
+            Arguments = $"/c \"echo {"executing command: " + compressCommand} " +
+                        $"& {virtualenvCommand} & {compressCommand} & pause\""
+        };
+
+        using Process process = new();
+        process.StartInfo = start;
+        process.Start();
+
+        await process.WaitForExitAsync();
+    } 
 
     #endregion
 
@@ -185,7 +219,7 @@ public partial class CnnPage : Page
 
     private bool RefreshDataset()
     {
-        DirectoryInfo directoryInfo = new DirectoryInfo(BasePath + "raw");
+        DirectoryInfo directoryInfo = new(BasePath + "raw");
         DirectoryInfo[] subDirectories = directoryInfo.GetDirectories();
 
         switch (subDirectories.Length)
@@ -288,7 +322,11 @@ public class CnnPageViewModel: INotifyPropertyChanged
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 
+    #region ViewModelProperty
+
     private string _selectedAudioType = "Mp3";
+    private string _selectedCompressModelPath = "未选择模型";
+
     public string SelectedAudioType{
         get => _selectedAudioType;
         set
@@ -298,6 +336,20 @@ public class CnnPageViewModel: INotifyPropertyChanged
             OnPropertyChanged(nameof(SelectedAudioType));
         }
     }
+
+    public string SelectedCompressModelPath
+    {
+        get => _selectedCompressModelPath;
+        set
+        {
+            if (_selectedCompressModelPath == value) return;
+            _selectedCompressModelPath = value;
+            OnPropertyChanged(nameof(SelectedCompressModelPath));
+        }
+    }
+
+    #endregion
+    
 }
 
 // #region DatasetTreeView
