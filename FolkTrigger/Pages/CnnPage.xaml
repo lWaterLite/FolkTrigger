@@ -44,12 +44,19 @@
     <Grid Background="Transparent" x:Name="MainGrid"
           DataContext="{Binding Source={StaticResource CnnPageViewModel}}">
         <DockPanel ZIndex="2" LastChildFill="False">
-            <TextBlock x:Name="WarningTextBlock"
+            <TextBlock x:Name="BottomInfoTextBlock"
                        DockPanel.Dock="Bottom"
-                       Background="#b71c1c"
+                       Background="Transparent"
                        Padding="8 8"
-                       FontSize="12"
-                       Visibility="Hidden" />
+                       FontSize="14"
+                       Visibility="Collapsed" />
+            <Button x:Name="ReimportSubprojectButton"
+                    DockPanel.Dock="Bottom"
+                    Style="{StaticResource ReimportSubprojectButtonStyle}"
+                    Visibility="Collapsed"
+                    Click="ReimportSubprojectButton_Click">
+                重新导入CNN子项目
+            </Button>
         </DockPanel>
 
         <ScrollViewer Background="#262626" VerticalScrollBarVisibility="Auto"

@@ -2,29 +2,32 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Windows.Forms.Design;
 using System.Windows.Markup;
-using Microsoft.Win32;
-using FolderBrowserDialog = System.Windows.Forms.FolderBrowserDialog;
+using System.Windows.Media;
+using Button = System.Windows.Controls.Button;
+using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
 
 namespace FolkTrigger.Pages;
 
 public partial class CnnPage : Page
 {
 
-    private static readonly string BasePath = AppDomain.CurrentDomain.BaseDirectory + @"MetaFolk_CNN\";
+    private readonly string _basePath = AppDomain.CurrentDomain.BaseDirectory + @"MetaFolk_CNN\";
 
     private string _datasetName = string.Empty;
 
     private readonly CnnPageViewModel _viewModel;
 
-    private readonly bool _projectDirExist;
+    private bool _projectDirExist;
     
     public CnnPage()
     {
@@ -52,28 +55,28 @@ public partial class CnnPage : Page
         switch (cnnLink)
         {
             case CnnLink.Readme:
-                Process.Start("explorer", BasePath + "readme.md");
+                Process.Start("explorer", _basePath + "readme.md");
                 break;
             case CnnLink.Root:
-                Process.Start("explorer", BasePath);
+                Process.Start("explorer", _basePath);
                 break;
             case CnnLink.Raw:
-                Process.Start("explorer", BasePath + "raw");
+                Process.Start("explorer", _basePath + "raw");
                 break;
             case CnnLink.Wav:
-                Process.Start("explorer", BasePath + "wav");
+                Process.Start("explorer", _basePath + "wav");
                 break;
             case CnnLink.Dataset:
-                Process.Start("explorer", BasePath + "dataset");
+                Process.Start("explorer", _basePath + "dataset");
                 break;
             case CnnLink.Config:
-                Process.Start("explorer", BasePath + "config");
+                Process.Start("explorer", _basePath + "config");
                 break;
             case CnnLink.Logs:
-                Process.Start("explorer", BasePath + "logs");
+                Process.Start("explorer", _basePath + "logs");
                 break;
             case CnnLink.Inference:
-                Process.Start("explorer", BasePath + "inference");
+                Process.Start("explorer", _basePath + "inference");
                 break;
             default:
                 return;
@@ -92,12 +95,12 @@ public partial class CnnPage : Page
         if (!_projectDirExist) return;
         
         FolderBrowserDialog folderBrowserDialog = new();
-        folderBrowserDialog.InitialDirectory = BasePath;
+        folderBrowserDialog.InitialDirectory = _basePath;
         folderBrowserDialog.ShowDialog();
         string selectedPath = folderBrowserDialog.SelectedPath;
         string datasetName = Path.GetFileName(selectedPath);
         
-        await Task.Run(() => GetFilesAndDirs(selectedPath, BasePath + $@"raw\{datasetName}\"));
+        await Task.Run(() => GetFilesAndDirs(selectedPath, _basePath + $@"raw\{datasetName}\"));
         ReloadDataset();
     }
 
@@ -105,10 +108,10 @@ public partial class CnnPage : Page
     {
         if (!_projectDirExist) return;
         
-        string virtualenvCommand = BasePath + @"venv\Scripts\activate";
-        string configCommand = $"python {BasePath + "1_gen_config.py"} --dataset={_datasetName}";
+        string virtualenvCommand = _basePath + @"venv\Scripts\activate";
+        string configCommand = $"python {_basePath + "1_gen_config.py"} --dataset={_datasetName}";
         string preprocessCommand =
-            $"python {BasePath + "2_dataset_preprocess.py"} " +
+            $"python {_basePath + "2_dataset_preprocess.py"} " +
             $"--audio-format={((string)AudioTypeComboBox.SelectedItem).ToLower()} " +
             $"{((bool)ConverterSwitcher.IsChecked! ? "" : "--no-convert")} " +
             $"{((bool)SlicerSwitcher.IsChecked! ? "" : "--no-slice")}";
@@ -136,8 +139,8 @@ public partial class CnnPage : Page
     {
         if (!_projectDirExist) return;
         
-        string virtualenvCommand = BasePath + @"venv\Scripts\activate";
-        string trainingCommand = $"python {BasePath + "3_train.py"} " +
+        string virtualenvCommand = _basePath + @"venv\Scripts\activate";
+        string trainingCommand = $"python {_basePath + "3_train.py"} " +
                                  $"{((bool)ValidateSwitcher.IsChecked! ? "" : "--no-validate")} " +
                                  $"{((bool)RecoverSwitcher.IsChecked! ? "" : "--no-recover")}";
         ProcessStartInfo start = new()
@@ -160,7 +163,7 @@ public partial class CnnPage : Page
         
         OpenFileDialog dialog = new()
         {
-            InitialDirectory = BasePath,
+            InitialDirectory = _basePath,
             Filter = "Checkpoint File (.ckpt)|*.ckpt"
         };
         if (dialog.ShowDialog() != true) return;
@@ -171,8 +174,8 @@ public partial class CnnPage : Page
     {
         if (!_projectDirExist) return;
         
-        string virtualenvCommand = BasePath + @"venv\Scripts\activate";
-        string compressCommand = $"python {BasePath + "4_compress_model.py"} " +
+        string virtualenvCommand = _basePath + @"venv\Scripts\activate";
+        string compressCommand = $"python {_basePath + "4_compress_model.py"} " +
                                  $"-m={_viewModel.SelectedCompressModelPath}";
         ProcessStartInfo start = new()
         {
@@ -194,7 +197,7 @@ public partial class CnnPage : Page
         
         OpenFileDialog dialog = new()
         {
-            InitialDirectory = BasePath,
+            InitialDirectory = _basePath,
             Filter = "Checkpoint File (.ckpt)|*.ckpt;*.pt"
         };
         if (dialog.ShowDialog() != true) return;
@@ -212,8 +215,8 @@ public partial class CnnPage : Page
     {
         if (!_projectDirExist) return;
         
-        string virtualenvCommand = BasePath + @"venv\scripts\activate";
-        string inferenceCommand = $"python {BasePath + "5_inference.py"} " +
+        string virtualenvCommand = _basePath + @"venv\scripts\activate";
+        string inferenceCommand = $"python {_basePath + "5_inference.py"} " +
                                   $"-m={_viewModel.SelectedInferenceModelPath}";
         ProcessStartInfo start = new()
         {
@@ -229,11 +232,16 @@ public partial class CnnPage : Page
         await process.WaitForExitAsync();
     }
 
+    private void ReimportSubprojectButton_Click(object sender, RoutedEventArgs e)
+    {
+        _projectDirExist = CheckProjectDirExist();
+    }
+
     #endregion
 
     #region Utils
     
-    private void GetFilesAndDirs(string srcDir,string destDir)
+    private static void GetFilesAndDirs(string srcDir,string destDir)
     {
         if (Directory.Exists(destDir)) return; //若目标文件夹不存在
         Directory.CreateDirectory(destDir);//创建目标文件夹                                                  
@@ -247,7 +255,7 @@ public partial class CnnPage : Page
         string[] dirs = Directory.GetDirectories(srcDir);
         foreach (string path in dirs)        //遍历文件夹
         {
-            DirectoryInfo directory = new DirectoryInfo(path);
+            DirectoryInfo directory = new (path);
             string newDir = destDir + directory.Name;
             GetFilesAndDirs(path+"\\", newDir+"\\");
         }
@@ -255,7 +263,7 @@ public partial class CnnPage : Page
 
     private void ReloadDataset()
     {
-        DirectoryInfo directoryInfo = new(BasePath + "raw");
+        DirectoryInfo directoryInfo = new(_basePath + "raw");
         DirectoryInfo[] subDirectories = directoryInfo.GetDirectories();
 
         switch (subDirectories.Length)
@@ -326,15 +334,31 @@ public partial class CnnPage : Page
 
     private int ReloadInferenceData()
     {
-        DirectoryInfo directoryInfo = new(BasePath + "inference\\raw");
+        DirectoryInfo directoryInfo = new(_basePath + "inference\\raw");
         int count = directoryInfo.EnumerateFiles("*.wav", SearchOption.TopDirectoryOnly).Count();
         return count;
     }
 
+    private async void ShowBottomInfoTextBlock(string info, string backgroundColor)
+    {
+        if (BottomInfoTextBlock.Visibility is Visibility.Visible) return;
+        BottomInfoTextBlock.Text = info;
+        BottomInfoTextBlock.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(backgroundColor));
+        BottomInfoTextBlock.Visibility = Visibility.Visible;
+        await Task.Delay(5000);
+        BottomInfoTextBlock.Visibility = Visibility.Collapsed;
+    }
+
     private bool CheckProjectDirExist()
     {
-        if (Directory.Exists(BasePath)) return true;
-        Utils.Utils.ExceptionHandler(new Exception("Error: The sub project MetaFolk_CNN is missing!"), WarningTextBlock);
+        if (Directory.Exists(_basePath))
+        {
+            ReimportSubprojectButton.Visibility = Visibility.Collapsed;
+            return true;
+        }
+        
+        ShowBottomInfoTextBlock("Error: The sub project MetaFolk_CNN is missing!", "#b71c1c");
+        ReimportSubprojectButton.Visibility = Visibility.Visible;
         return false;
     }
 

@@ -25,7 +25,7 @@
 
     <Grid Background="Transparent">
         <DockPanel ZIndex="2" LastChildFill="False">
-            <TextBlock x:Name="WarningTextBlock" 
+            <TextBlock x:Name="BottomInfoTextBlock" 
                 DockPanel.Dock="Bottom" 
                 Background="#b71c1c" 
                 Padding="8 8"

@@ -5,7 +5,8 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Diagnostics;
-using FolkTrigger.Utils;
+using System.Threading.Tasks;
+using Microsoft.VisualBasic.CompilerServices;
 
 namespace FolkTrigger.Pages;
 
@@ -26,7 +27,7 @@ public partial class StartPage : Page
             "pack://application:,,,/Assets/Image/start_2.png"
         };
 
-        Random random = new Random();
+        Random random = new();
         string randomImagePath = imagePaths[random.Next(imagePaths.Count)];
 
         StartTitleBackgroundImageBrush.ImageSource = new BitmapImage(new Uri(randomImagePath));
@@ -65,7 +66,7 @@ public partial class StartPage : Page
         }
         catch (Exception exception)
         {
-            Utils.Utils.ExceptionHandler(exception, WarningTextBlock);
+            ShowBottomInfoTextBlock(exception.ToString(), "#b71c1c");
         }
     }
 
@@ -78,9 +79,20 @@ public partial class StartPage : Page
     //     }
     //     catch (Exception e)
     //     {
-    //         Utils.Utils.ExceptionHandler(e, WarningTextBlock);
+    //         Utils.Utils.ExceptionHandler(e, BottomInfoTextBlock);
     //     }
     // }
+    
+    private async void ShowBottomInfoTextBlock(string info, string backgroundColor)
+    {
+        if (BottomInfoTextBlock.Visibility is Visibility.Visible) return;
+        BottomInfoTextBlock.Text = info;
+        BottomInfoTextBlock.Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString(backgroundColor));
+        BottomInfoTextBlock.Visibility = Visibility.Visible;
+        await Task.Delay(5000);
+        BottomInfoTextBlock.Visibility = Visibility.Collapsed;
+    }
+    
 }
 
 public enum StartLink

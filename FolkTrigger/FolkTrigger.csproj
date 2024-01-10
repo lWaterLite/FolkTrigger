@@ -69,6 +69,10 @@
       <Resource Include="Assets\Icon\Cnn\Node_expand.svg" />
       <None Remove="Assets\Font\icon.ttf" />
       <Resource Include="Assets\Font\icon.ttf" />
+      <None Update="App.config">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <Reference Include="System.Configuration" />
     </ItemGroup>
 
     <ItemGroup>
@@ -77,7 +81,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\FTCustomControlLibrary\FTCustomControlLibrary.csproj" />
-      <ProjectReference Include="..\FT_Switcher\FT_Switcher.csproj" />
     </ItemGroup>
 
 </Project>
