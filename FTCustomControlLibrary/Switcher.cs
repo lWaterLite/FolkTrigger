@@ -1,20 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace FTCustomControlLibrary
 {
@@ -26,7 +17,7 @@ namespace FTCustomControlLibrary
                 new FrameworkPropertyMetadata(typeof(Switcher)));
         }
 
-        public Switcher() : base()
+        public Switcher()
         {
             Checked += CheckedAnimation;
             Unchecked += UncheckedAnimation;
@@ -85,12 +76,12 @@ namespace FTCustomControlLibrary
 
         private readonly DoubleAnimation _buttonAnimation = new(0, new Duration(new TimeSpan(0, 0, 0, 0, 300)))
         {
-            EasingFunction = new CubicEase() { EasingMode = EasingMode.EaseInOut }
+            EasingFunction = new CubicEase { EasingMode = EasingMode.EaseInOut }
         };
         
         private readonly DoubleAnimation _textAnimation = new(0, new Duration(new TimeSpan(0, 0, 0, 0, 300)))
         {
-            EasingFunction = new CubicEase() { EasingMode = EasingMode.EaseInOut }
+            EasingFunction = new CubicEase { EasingMode = EasingMode.EaseInOut }
         };
 
         private void CheckedAnimation(object sender, RoutedEventArgs e)

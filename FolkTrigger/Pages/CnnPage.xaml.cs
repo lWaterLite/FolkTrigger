@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Configuration;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Forms.Design;
-using System.Windows.Markup;
 using System.Windows.Media;
 using Button = System.Windows.Controls.Button;
 using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
@@ -19,7 +13,7 @@ using DialogResult = System.Windows.Forms.DialogResult;
 
 namespace FolkTrigger.Pages;
 
-public partial class CnnPage : Page
+public partial class CnnPage
 {
 
     private readonly string _basePath = AppDomain.CurrentDomain.BaseDirectory + @"MetaFolk_CNN\";
