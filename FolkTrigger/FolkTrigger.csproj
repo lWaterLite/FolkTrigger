@@ -72,11 +72,6 @@
       <None Update="App.config">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <Reference Include="System.Configuration" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Controls\" />
     </ItemGroup>
 
     <ItemGroup>
