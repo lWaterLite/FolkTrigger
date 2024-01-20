@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <SolidColorBrush x:Key="ComboBoxBackground" Color="#2b2b2b" />
     <SolidColorBrush x:Key="BorderColorBrush" Color="#6a6a6a" />
-    
+
     <Style x:Key="CustomComboBox" TargetType="{x:Type ComboBox}">
         <Setter Property="Background" Value="{StaticResource ComboBoxBackground}" />
         <Setter Property="MinWidth" Value="64" />
@@ -12,7 +12,7 @@
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="ComboBoxItem">
-                                <Border Name="back" Padding="8 4 0 4" 
+                                <Border Name="back" Padding="8 4 0 4"
                                         Background="{StaticResource ComboBoxBackground}" BorderThickness="0">
                                     <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Left" />
                                 </Border>
@@ -102,9 +102,7 @@
                                                             </Grid>
                                                         </Border>
                                                         <ControlTemplate.Triggers>
-                                                            <Trigger Property="IsChecked" Value="True">
-
-                                                            </Trigger>
+                                                            <Trigger Property="IsChecked" Value="True" />
                                                             <EventTrigger RoutedEvent="Checked">
                                                                 <BeginStoryboard>
                                                                     <Storyboard>
@@ -142,7 +140,8 @@
                                     </ToggleButton.Style>
                                 </ToggleButton>
                             </Grid>
-                            <Popup Grid.Column="0" IsOpen="{TemplateBinding IsDropDownOpen}" Placement="Bottom" x:Name="Popup"
+                            <Popup Grid.Column="0" IsOpen="{TemplateBinding IsDropDownOpen}" Placement="Bottom"
+                                   x:Name="Popup"
                                    Focusable="False" AllowsTransparency="True" PopupAnimation="Slide">
                                 <Border CornerRadius="1" MaxHeight="{TemplateBinding MaxDropDownHeight}"
                                         MinWidth="{TemplateBinding ActualWidth}" x:Name="DropDown"

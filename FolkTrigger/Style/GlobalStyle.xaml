@@ -4,7 +4,7 @@
         <Setter Property="FontFamily" Value="Microsoft Yahei" />
         <Setter Property="Foreground" Value="White" />
     </Style>
-    
+
     <Style TargetType="{x:Type TextBlock}">
         <Setter Property="FontFamily" Value="Microsoft Yahei" />
         <Setter Property="Foreground" Value="White" />

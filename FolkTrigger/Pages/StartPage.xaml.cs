@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Diagnostics;
-using System.Threading.Tasks;
-using Microsoft.VisualBasic.CompilerServices;
 
 namespace FolkTrigger.Pages;
 
@@ -15,13 +14,13 @@ public partial class StartPage : Page
     public StartPage()
     {
         InitializeComponent();
-        
+
         StartTitleBackgroundInit();
     }
 
     private void StartTitleBackgroundInit()
     {
-        List<string> imagePaths = new List<string>()
+        var imagePaths = new List<string>
         {
             "pack://application:,,,/Assets/Image/start_1.png",
             "pack://application:,,,/Assets/Image/start_2.png"
@@ -82,7 +81,7 @@ public partial class StartPage : Page
     //         Utils.Utils.ExceptionHandler(e, BottomInfoTextBlock);
     //     }
     // }
-    
+
     private async void ShowBottomInfoTextBlock(string info, string backgroundColor)
     {
         if (BottomInfoTextBlock.Visibility is Visibility.Visible) return;
@@ -92,7 +91,6 @@ public partial class StartPage : Page
         await Task.Delay(5000);
         BottomInfoTextBlock.Visibility = Visibility.Collapsed;
     }
-    
 }
 
 public enum StartLink

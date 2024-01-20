@@ -5,7 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
         xmlns:pages="clr-namespace:FolkTrigger.Pages"
-        xmlns:local="clr-namespace:FolkTrigger"
         mc:Ignorable="d"
         Title="MainWindow" Height="750" Width="1280" MinHeight="570" MinWidth="960" MaxHeight="930" MaxWidth="1600">
     <WindowChrome.WindowChrome>
@@ -47,7 +46,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Grid Column="0">
-                    <Button Style="{StaticResource MenuBtn}" 
+                    <Button Style="{StaticResource MenuBtn}"
                             Command="{x:Static SystemCommands.MinimizeWindowCommand}">
                         <svgc:SvgViewbox Height="16" Width="16"
                                          IsHitTestVisible="True"
@@ -55,7 +54,7 @@
                     </Button>
                 </Grid>
                 <Grid Column="1">
-                    <Button Style="{StaticResource MenuBtnClose}" 
+                    <Button Style="{StaticResource MenuBtnClose}"
                             Command="{x:Static SystemCommands.CloseWindowCommand}">
                         <svgc:SvgViewbox Height="12" Width="12"
                                          IsHitTestVisible="True" Source="pack://application:,,,/Assets/Icon/Close.svg" />
@@ -63,29 +62,29 @@
                 </Grid>
             </Grid>
         </Grid>
-        
+
         <Grid Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="64"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="64" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            
+
             <Grid Column="0" Background="#202020">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                
+
                 <Grid Row="0" Margin="3">
                     <StackPanel Orientation="Vertical">
                         <RadioButton GroupName="navigator" x:Name="StartRadioButton"
-                                     Style="{StaticResource NaviRadioBtn}" 
+                                     Style="{StaticResource NaviRadioBtn}"
                                      Margin="0 0 0 3"
                                      Tag="{x:Type pages:StartPage}"
                                      Checked="NaviRadioButton_Checked">
                             <svgc:SvgViewbox IsHitTestVisible="False" Height="20" Width="20"
-                                             Source="pack://application:,,,/Assets/Icon/Start.svg"/>
+                                             Source="pack://application:,,,/Assets/Icon/Start.svg" />
                         </RadioButton>
                         <RadioButton GroupName="navigator"
                                      Style="{StaticResource NaviRadioBtn}"
@@ -93,27 +92,27 @@
                                      Tag="{x:Type pages:CnnPage}"
                                      Checked="NaviRadioButton_Checked">
                             <svgc:SvgViewbox IsHitTestVisible="False" Height="20" Width="20"
-                                             Source="pack://application:,,,/Assets/Icon/Cnn/Cnn.svg"/>
+                                             Source="pack://application:,,,/Assets/Icon/Cnn/Cnn.svg" />
                         </RadioButton>
                         <RadioButton GroupName="navigator"
                                      Style="{StaticResource NaviRadioBtn}"
                                      Margin="0 0 0 3">
                             <svgc:SvgViewbox IsHitTestVisible="False" Height="20" Width="20"
-                                             Source="pack://application:,,,/Assets/Icon/Svc.svg"/>
+                                             Source="pack://application:,,,/Assets/Icon/Svc.svg" />
                         </RadioButton>
                     </StackPanel>
                 </Grid>
-                <Grid Row="1"></Grid>
+                <Grid Row="1" />
                 <Grid Row="2">
                     <RadioButton GroupName="navigator"
                                  Style="{StaticResource NaviRadioBtn}"
                                  Margin="0 0 0 3">
                         <svgc:SvgViewbox IsHitTestVisible="False" Height="20" Width="20"
-                                         Source="pack://application:,,,/Assets/Icon/Config.svg"/>
+                                         Source="pack://application:,,,/Assets/Icon/Config.svg" />
                     </RadioButton>
                 </Grid>
             </Grid>
-            
+
             <Grid Column="1" Background="#202020">
                 <Frame NavigationUIVisibility="Hidden" Name="MainFrame" />
             </Grid>

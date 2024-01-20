@@ -4,7 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:sys="clr-namespace:System;assembly=mscorlib"
-      xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+      xmlns:ft="clr-namespace:FTCustomControlLibrary;assembly=FTCustomControlLibrary"
       xmlns:local="clr-namespace:FolkTrigger.Pages"
       mc:Ignorable="d"
       d:DesignHeight="720"
@@ -14,6 +14,10 @@
     <Page.Resources>
         <sys:String x:Key="LaunchVersion">1.3.2 Build 16</sys:String>
         <sys:String x:Key="DescriptionVersion">2023.11.15</sys:String>
+        
+        <Style TargetType="{x:Type ft:LinkButton}">
+            <Setter Property="FontFamily" Value="pack://application:,,,/Assets/Font/#folktrigger" />
+        </Style>
 
         <Style x:Key="FootnoteText" TargetType="TextBlock">
             <Setter Property="FontFamily" Value="Microsoft Yahei" />
@@ -25,12 +29,12 @@
 
     <Grid Background="Transparent">
         <DockPanel ZIndex="2" LastChildFill="False">
-            <TextBlock x:Name="BottomInfoTextBlock" 
-                DockPanel.Dock="Bottom" 
-                Background="#b71c1c" 
-                Padding="8 8"
-                FontSize="12"
-                Visibility="Hidden" />
+            <TextBlock x:Name="BottomInfoTextBlock"
+                       DockPanel.Dock="Bottom"
+                       Background="#b71c1c"
+                       Padding="8 8"
+                       FontSize="12"
+                       Visibility="Hidden" />
         </DockPanel>
         <Border Background="#262626" CornerRadius="8 0 0 0" Padding="24">
             <Grid Background="Transparent" ZIndex="1">
@@ -95,109 +99,29 @@
                                     </Grid.ColumnDefinitions>
 
                                     <!-- LAUNCHER README BUTTON -->
-                                    <Button Grid.Row="0" Grid.Column="0"
-                                            Click="StartPageLinkButton_Click"
-                                            Tag="{x:Static local:StartLink.LauncherReadme}"
-                                            Style="{StaticResource StartPageLinkButton}">
-                                        <Button.Content>
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="Auto" />
-                                                    <ColumnDefinition Width="*" />
-                                                    <ColumnDefinition Width="Auto" />
-                                                </Grid.ColumnDefinitions>
-                                                <svgc:SvgViewbox IsHitTestVisible="False"
-                                                                 Grid.Column="0"
-                                                                 DockPanel.Dock="Left"
-                                                                 HorizontalAlignment="Left"
-                                                                 Height="20" Width="20"
-                                                                 Margin="20 0 16 0"
-                                                                 Source="pack://application:,,,/Assets/Icon/Start_readme.svg" />
-                                                <StackPanel Grid.Column="1" Orientation="Vertical"
-                                                            VerticalAlignment="Center">
-                                                    <TextBlock FontSize="14" Margin="0 0 0 4">FolkTrigger</TextBlock>
-                                                    <TextBlock FontSize="12" FontWeight="Light">./readme.md</TextBlock>
-                                                </StackPanel>
-                                                <svgc:SvgViewbox IsHitTestVisible="False"
-                                                                 Grid.Column="2"
-                                                                 DockPanel.Dock="Right"
-                                                                 Margin="0 0 16 0"
-                                                                 HorizontalAlignment="Right"
-                                                                 Height="10" Width="10"
-                                                                 Source="pack://application:,,,/Assets/Icon/Open.svg" />
-                                            </Grid>
-                                        </Button.Content>
-                                    </Button>
+                                    <ft:LinkButton Grid.Row="0" Grid.Column="0"
+                                                   LinkNameText="FolkTrigger"
+                                                   LinkPathText="./readme.md"
+                                                   IconText="&#xe6ff;"
+                                                   Tag="{x:Static local:StartLink.LauncherReadme}"
+                                                   Click="StartPageLinkButton_Click" />
+                                    
 
                                     <!-- CNN README BUTTON -->
-                                    <Button Grid.Row="0" Grid.Column="1"
-                                            Tag="{x:Static local:StartLink.CnnReadme}"
-                                            Click="StartPageLinkButton_Click"
-                                            Style="{StaticResource StartPageLinkButton}">
-                                        <Button.Content>
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="Auto" />
-                                                    <ColumnDefinition Width="*" />
-                                                    <ColumnDefinition Width="Auto" />
-                                                </Grid.ColumnDefinitions>
-                                                <svgc:SvgViewbox IsHitTestVisible="False"
-                                                                 Grid.Column="0"
-                                                                 DockPanel.Dock="Left"
-                                                                 HorizontalAlignment="Left"
-                                                                 Height="20" Width="20"
-                                                                 Margin="20 0 16 0"
-                                                                 Source="pack://application:,,,/Assets/Icon/Cnn/Cnn_readme.svg" />
-                                                <StackPanel Grid.Column="1" Orientation="Vertical"
-                                                            VerticalAlignment="Center">
-                                                    <TextBlock FontSize="14" Margin="0 0 0 4">CNN</TextBlock>
-                                                    <TextBlock FontSize="12" FontWeight="Light">./MetaFolk_CNN/readme.md</TextBlock>
-                                                </StackPanel>
-                                                <svgc:SvgViewbox IsHitTestVisible="False"
-                                                                 Grid.Column="2"
-                                                                 DockPanel.Dock="Right"
-                                                                 Margin="0 0 16 0"
-                                                                 HorizontalAlignment="Right"
-                                                                 Height="10" Width="10"
-                                                                 Source="pack://application:,,,/Assets/Icon/Open.svg" />
-                                            </Grid>
-                                        </Button.Content>
-                                    </Button>
+                                    <ft:LinkButton Grid.Row="0" Grid.Column="1"
+                                                   LinkNameText="CNN"
+                                                   LinkPathText="./MetaFolk_CNN/readme.md"
+                                                   IconText="&#xe605;"
+                                                   Tag="{x:Static local:StartLink.CnnReadme}"
+                                                   Click="StartPageLinkButton_Click" />
 
                                     <!-- SVC README BUTTON -->
-                                    <Button Grid.Row="0" Grid.Column="2"
-                                            Click="StartPageLinkButton_Click"
-                                            Tag="{x:Static local:StartLink.SvcReadme}"
-                                            Style="{StaticResource StartPageLinkButton}">
-                                        <Button.Content>
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="Auto" />
-                                                    <ColumnDefinition Width="*" />
-                                                    <ColumnDefinition Width="Auto" />
-                                                </Grid.ColumnDefinitions>
-                                                <svgc:SvgViewbox IsHitTestVisible="False"
-                                                                 Grid.Column="0"
-                                                                 DockPanel.Dock="Left"
-                                                                 HorizontalAlignment="Left"
-                                                                 Height="20" Width="20"
-                                                                 Margin="20 0 16 0"
-                                                                 Source="pack://application:,,,/Assets/Icon/Svc_readme.svg" />
-                                                <StackPanel Grid.Column="1" Orientation="Vertical"
-                                                            VerticalAlignment="Center">
-                                                    <TextBlock FontSize="14" Margin="0 0 0 4">So-Vits-Svc</TextBlock>
-                                                    <TextBlock FontSize="12" FontWeight="Light">./MetaFolk_SVC/readme.md</TextBlock>
-                                                </StackPanel>
-                                                <svgc:SvgViewbox IsHitTestVisible="False"
-                                                                 Grid.Column="2"
-                                                                 DockPanel.Dock="Right"
-                                                                 Margin="0 0 16 0"
-                                                                 HorizontalAlignment="Right"
-                                                                 Height="10" Width="10"
-                                                                 Source="pack://application:,,,/Assets/Icon/Open.svg" />
-                                            </Grid>
-                                        </Button.Content>
-                                    </Button>
+                                    <ft:LinkButton Grid.Row="0" Grid.Column="2"
+                                                   LinkNameText="So-Vits-Svc"
+                                                   LinkPathText="./MetaFolk_SVC/readme.md"
+                                                   IconText="&#xe610;"
+                                                   Tag="{x:Static local:StartLink.SvcReadme}"
+                                                   Click="StartPageLinkButton_Click" />
                                 </Grid>
                             </ScrollViewer>
                         </Grid>
@@ -230,109 +154,29 @@
                                     </Grid.ColumnDefinitions>
 
                                     <!-- Launch Folder Button -->
-                                    <Button Grid.Row="0" Grid.Column="0"
-                                            Click="StartPageLinkButton_Click"
-                                            Tag="{x:Static local:StartLink.LauncherFolder}"
-                                            Style="{StaticResource StartPageLinkButton}">
-                                        <Button.Content>
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="Auto" />
-                                                    <ColumnDefinition Width="*" />
-                                                    <ColumnDefinition Width="Auto" />
-                                                </Grid.ColumnDefinitions>
-                                                <svgc:SvgViewbox IsHitTestVisible="False"
-                                                                 Grid.Column="0"
-                                                                 DockPanel.Dock="Left"
-                                                                 HorizontalAlignment="Left"
-                                                                 Height="20" Width="20"
-                                                                 Margin="20 0 16 0"
-                                                                 Source="pack://application:,,,/Assets/Icon/Start_folder.svg" />
-                                                <StackPanel Grid.Column="1" Orientation="Vertical"
-                                                            VerticalAlignment="Center">
-                                                    <TextBlock FontSize="14" Margin="0 0 0 4">FolkTrigger</TextBlock>
-                                                    <TextBlock FontSize="12" FontWeight="Light">.</TextBlock>
-                                                </StackPanel>
-                                                <svgc:SvgViewbox IsHitTestVisible="False"
-                                                                 Grid.Column="2"
-                                                                 DockPanel.Dock="Right"
-                                                                 Margin="0 0 16 0"
-                                                                 HorizontalAlignment="Right"
-                                                                 Height="10" Width="10"
-                                                                 Source="pack://application:,,,/Assets/Icon/Open.svg" />
-                                            </Grid>
-                                        </Button.Content>
-                                    </Button>
-                                    
+                                    <ft:LinkButton Grid.Row="0" Grid.Column="0"
+                                                   LinkNameText="FolkTrigger"
+                                                   LinkPathText="."
+                                                   IconText="&#xe611;"
+                                                   Tag="{x:Static local:StartLink.LauncherFolder}"
+                                                   Click="StartPageLinkButton_Click" />
+
                                     <!-- CNN FOLDER BUTTON -->
-                                    <Button Grid.Row="0" Grid.Column="1"
-                                            Tag="{x:Static local:StartLink.CnnFolder}"
-                                            Click="StartPageLinkButton_Click"
-                                            Style="{StaticResource StartPageLinkButton}">
-                                        <Button.Content>
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="Auto" />
-                                                    <ColumnDefinition Width="*" />
-                                                    <ColumnDefinition Width="Auto" />
-                                                </Grid.ColumnDefinitions>
-                                                <svgc:SvgViewbox IsHitTestVisible="False"
-                                                                 Grid.Column="0"
-                                                                 DockPanel.Dock="Left"
-                                                                 HorizontalAlignment="Left"
-                                                                 Height="20" Width="20"
-                                                                 Margin="20 0 16 0"
-                                                                 Source="pack://application:,,,/Assets/Icon/Cnn/Cnn_folder.svg" />
-                                                <StackPanel Grid.Column="1" Orientation="Vertical"
-                                                            VerticalAlignment="Center">
-                                                    <TextBlock FontSize="14" Margin="0 0 0 4">CNN</TextBlock>
-                                                    <TextBlock FontSize="12" FontWeight="Light">./MetaFolk_CNN</TextBlock>
-                                                </StackPanel>
-                                                <svgc:SvgViewbox IsHitTestVisible="False"
-                                                                 Grid.Column="2"
-                                                                 DockPanel.Dock="Right"
-                                                                 Margin="0 0 16 0"
-                                                                 HorizontalAlignment="Right"
-                                                                 Height="10" Width="10"
-                                                                 Source="pack://application:,,,/Assets/Icon/Open.svg" />
-                                            </Grid>
-                                        </Button.Content>
-                                    </Button>
-                                    
+                                    <ft:LinkButton Grid.Row="0" Grid.Column="1"
+                                                   LinkNameText="CNN"
+                                                   LinkPathText="./MetaFolk_CNN"
+                                                   IconText="&#xe60a;"
+                                                   Tag="{x:Static local:StartLink.CnnFolder}"
+                                                   Click="StartPageLinkButton_Click" />
+
                                     <!-- SVC FOLDER BUTTON  -->
-                                    <Button Grid.Row="0" Grid.Column="2" 
-                                            Tag="{x:Static local:StartLink.SvcFolder}"
-                                            Click="StartPageLinkButton_Click"
-                                            Style="{StaticResource StartPageLinkButton}">
-                                        <Button.Content>
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="Auto" />
-                                                    <ColumnDefinition Width="*" />
-                                                    <ColumnDefinition Width="Auto" />
-                                                </Grid.ColumnDefinitions>
-                                                <svgc:SvgViewbox IsHitTestVisible="False"
-                                                                 Grid.Column="0"
-                                                                 DockPanel.Dock="Left"
-                                                                 HorizontalAlignment="Left"
-                                                                 Height="20" Width="20"
-                                                                 Margin="20 0 16 0"
-                                                                 Source="pack://application:,,,/Assets/Icon/Svc_folder.svg" />
-                                                <StackPanel Grid.Column="1" Orientation="Vertical"
-                                                            VerticalAlignment="Center">
-                                                    <TextBlock FontSize="14" Margin="0 0 0 4">So-Vits-Svc</TextBlock>
-                                                    <TextBlock FontSize="12" FontWeight="Light">./MetaFolk_SVC</TextBlock>
-                                                </StackPanel>
-                                                <svgc:SvgViewbox IsHitTestVisible="False"
-                                                                 Grid.Column="2"
-                                                                 DockPanel.Dock="Right"
-                                                                 Margin="0 0 16 0"
-                                                                 HorizontalAlignment="Right"
-                                                                 Height="10" Width="10"
-                                                                 Source="pack://application:,,,/Assets/Icon/Open.svg" />
-                                            </Grid>
-                                        </Button.Content>
-                                    </Button>
+                                    <ft:LinkButton Grid.Row="0" Grid.Column="2"
+                                                   LinkNameText="So-Vits-Svc"
+                                                   LinkPathText="./MetaFolk_SVC"
+                                                   IconText="&#xe60e;"
+                                                   Tag="{x:Static local:StartLink.SvcFolder}"
+                                                   Click="StartPageLinkButton_Click" />
+
                                 </Grid>
                             </ScrollViewer>
                         </Grid>

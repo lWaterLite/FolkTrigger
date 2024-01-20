@@ -15,19 +15,18 @@ namespace FolkTrigger.Pages;
 
 public partial class CnnPage
 {
-
     private readonly string _basePath = AppDomain.CurrentDomain.BaseDirectory + @"MetaFolk_CNN\";
-
-    private string _datasetName = string.Empty;
 
     private readonly CnnPageViewModel _viewModel;
 
+    private string _datasetName = string.Empty;
+
     private bool _projectDirExist;
-    
+
     public CnnPage()
     {
         InitializeComponent();
-        
+
         _viewModel = (MainGrid.DataContext as CnnPageViewModel)!;
         _projectDirExist = CheckProjectDirExist();
         if (!_projectDirExist) return;
@@ -41,8 +40,8 @@ public partial class CnnPage
     private void CnnPageLinkButton_Click(object sender, RoutedEventArgs eventArgs)
     {
         if (!_projectDirExist) return;
-        
-        if(sender is not Button button)
+
+        if (sender is not Button button)
             return;
         if (button.Tag is not CnnLink cnnLink)
             return;
@@ -81,20 +80,20 @@ public partial class CnnPage
     private void CnnPageRefreshButton_Click(object sender, RoutedEventArgs eventArgs)
     {
         if (!_projectDirExist) return;
-        
+
         ReloadDataset();
     }
 
     private async void CnnPageLoadButton_Click(object sender, RoutedEventArgs eventArgs)
     {
         if (!_projectDirExist) return;
-        
+
         FolderBrowserDialog folderBrowserDialog = new();
         folderBrowserDialog.InitialDirectory = _basePath;
         folderBrowserDialog.ShowDialog();
         string selectedPath = folderBrowserDialog.SelectedPath;
         string datasetName = Path.GetFileName(selectedPath);
-        
+
         await Task.Run(() => GetFilesAndDirs(selectedPath, _basePath + $@"raw\{datasetName}\"));
         ReloadDataset();
     }
@@ -102,7 +101,7 @@ public partial class CnnPage
     private async void PreprocessButton_Click(object sender, RoutedEventArgs eventArgs)
     {
         if (!_projectDirExist) return;
-        
+
         string virtualenvCommand = _basePath + @"venv\Scripts\activate";
         string configCommand = $"python {_basePath + "1_gen_config.py"} --dataset={_datasetName}";
         string preprocessCommand =
@@ -126,14 +125,17 @@ public partial class CnnPage
 
         await process.WaitForExitAsync(); // 等待进程结束
         return;
-        
-        string Echo(string executedCommand) => $"echo {"executing command: " + executedCommand}";
+
+        string Echo(string executedCommand)
+        {
+            return $"echo {"executing command: " + executedCommand}";
+        }
     }
 
     private async void TrainingButton_Click(object sender, RoutedEventArgs eventArgs)
     {
         if (!_projectDirExist) return;
-        
+
         string virtualenvCommand = _basePath + @"venv\Scripts\activate";
         string trainingCommand = $"python {_basePath + "3_train.py"} " +
                                  $"{((bool)ValidateSwitcher.IsChecked! ? "" : "--no-validate")} " +
@@ -155,7 +157,7 @@ public partial class CnnPage
     private void SelectCompressModelButton_Click(object sender, RoutedEventArgs e)
     {
         if (!_projectDirExist) return;
-        
+
         OpenFileDialog dialog = new()
         {
             InitialDirectory = _basePath,
@@ -168,7 +170,7 @@ public partial class CnnPage
     private async void CompressModelButton_Click(object sender, RoutedEventArgs e)
     {
         if (!_projectDirExist) return;
-        
+
         string virtualenvCommand = _basePath + @"venv\Scripts\activate";
         string compressCommand = $"python {_basePath + "4_compress_model.py"} " +
                                  $"-m={_viewModel.SelectedCompressModelPath}";
@@ -185,11 +187,11 @@ public partial class CnnPage
 
         await process.WaitForExitAsync();
     }
-    
+
     private void SelectInferenceModelButton_Click(object sender, RoutedEventArgs e)
     {
         if (!_projectDirExist) return;
-        
+
         OpenFileDialog dialog = new()
         {
             InitialDirectory = _basePath,
@@ -202,14 +204,14 @@ public partial class CnnPage
     private async void ReloadInferenceDataButton_Click(object sender, RoutedEventArgs e)
     {
         if (!_projectDirExist) return;
-        
+
         await Task.Run(() => _viewModel.InferenceDataCount = ReloadInferenceData());
     }
 
     private async void InferenceButton_Click(object sender, RoutedEventArgs e)
     {
         if (!_projectDirExist) return;
-        
+
         string virtualenvCommand = _basePath + @"venv\scripts\activate";
         string inferenceCommand = $"python {_basePath + "5_inference.py"} " +
                                   $"-m={_viewModel.SelectedInferenceModelPath}";
@@ -248,31 +250,32 @@ public partial class CnnPage
     #endregion
 
     #region Utils
-    
-    private static void GetFilesAndDirs(string srcDir,string destDir)
+
+    private static void GetFilesAndDirs(string srcDir, string destDir)
     {
         if (Directory.Exists(destDir)) return; //若目标文件夹不存在
-        Directory.CreateDirectory(destDir);//创建目标文件夹                                                  
-        string[] files = Directory.GetFiles(srcDir);//获取源文件夹中的所有文件完整路径
-        foreach (string path in files)          //遍历文件     
+        Directory.CreateDirectory(destDir); //创建目标文件夹                                                  
+        string[] files = Directory.GetFiles(srcDir); //获取源文件夹中的所有文件完整路径
+        foreach (string path in files) //遍历文件     
         {
             FileInfo fileInfo = new(path);
             string newPath = destDir + fileInfo.Name;
             File.Copy(path, newPath, true);
         }
+
         string[] dirs = Directory.GetDirectories(srcDir);
-        foreach (string path in dirs)        //遍历文件夹
+        foreach (string path in dirs) //遍历文件夹
         {
-            DirectoryInfo directory = new (path);
+            DirectoryInfo directory = new(path);
             string newDir = destDir + directory.Name;
-            GetFilesAndDirs(path+"\\", newDir+"\\");
+            GetFilesAndDirs(path + "\\", newDir + "\\");
         }
     }
 
     private void ReloadDataset()
     {
         DirectoryInfo directoryInfo = new(_basePath + "raw");
-        DirectoryInfo[] subDirectories = directoryInfo.GetDirectories();
+        var subDirectories = directoryInfo.GetDirectories();
 
         switch (subDirectories.Length)
         {
@@ -282,20 +285,22 @@ public partial class CnnPage
                 return;
             case 1:
             {
-                DirectoryInfo[] tagDirectories = subDirectories[0].GetDirectories();
+                var tagDirectories = subDirectories[0].GetDirectories();
                 if (tagDirectories.Length == 0)
                 {
                     _datasetName = string.Empty;
                     _viewModel.DatasetImportText = "错误: 检测到了不符合格式的数据集根目录，请重新导入数据集";
                     return;
                 }
+
                 _datasetName = subDirectories[0].Name;
                 _viewModel.DatasetImportText = "成功导入数据集。\n当前数据集为: " + _datasetName;
                 return;
             }
         }
 
-        if (subDirectories.Select(subDirectory => subDirectory.GetDirectories()).Any(tagDirectories => tagDirectories.Length != 0))
+        if (subDirectories.Select(subDirectory => subDirectory.GetDirectories())
+            .Any(tagDirectories => tagDirectories.Length != 0))
         {
             _datasetName = subDirectories[0].Name;
             _viewModel.DatasetImportText = "警告: 检测到多个数据集，仅读取第一个符合要求数据集。\n当前数据集为: " + _datasetName;
@@ -364,14 +369,13 @@ public partial class CnnPage
             ReimportSubprojectButton.Visibility = Visibility.Collapsed;
             return true;
         }
-        
+
         ShowBottomInfoTextBlock("Error: The sub project MetaFolk_CNN is missing!", "#b71c1c");
         ReimportSubprojectButton.Visibility = Visibility.Visible;
         return false;
     }
 
     #endregion
-
 }
 
 public enum CnnLink
@@ -394,8 +398,8 @@ public enum AudioType
     Wav
 }
 
-public class CnnPageViewModel: INotifyPropertyChanged
-{ 
+public class CnnPageViewModel : INotifyPropertyChanged
+{
     public event PropertyChangedEventHandler? PropertyChanged;
 
     private void OnPropertyChanged(string propertyName)
@@ -411,7 +415,8 @@ public class CnnPageViewModel: INotifyPropertyChanged
     private int _inferenceDataCount;
     private string _datasetImportText = "未导入数据集";
 
-    public string SelectedAudioType{
+    public string SelectedAudioType
+    {
         get => _selectedAudioType;
         set
         {
@@ -466,7 +471,6 @@ public class CnnPageViewModel: INotifyPropertyChanged
     }
 
     #endregion
-    
 }
 
 // #region DatasetTreeView
