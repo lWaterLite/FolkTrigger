@@ -9,7 +9,7 @@
       xmlns:local="clr-namespace:FolkTrigger.Pages"
       mc:Ignorable="d"
       Title="CnnPage"
-      d:DesignHeight="1200"
+      d:DesignHeight="1400"
       d:DesignWidth="1216">
 
     <Page.Resources>
@@ -20,7 +20,7 @@
             <Setter Property="BorderBrush" Value="#6a6a6a" />
             <Setter Property="BorderThickness" Value="2" />
             <Setter Property="CornerRadius" Value="4" />
-            <Setter Property="Margin" Value="0 0 0 8"></Setter>
+            <Setter Property="Margin" Value="0 0 0 8" />
         </Style>
 
         <Style x:Key="TextCardText" TargetType="{x:Type TextBlock}">
@@ -29,6 +29,15 @@
             <Setter Property="Margin" Value="4 12" />
             <Setter Property="FontSize" Value="14" />
             <Setter Property="TextAlignment" Value="Center" />
+        </Style>
+        
+        <Style x:Key="SectionBorder" TargetType="{x:Type Border}">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="2" />
+            <Setter Property="BorderBrush" Value="#6a6a6a" />
+            <Setter Property="CornerRadius" Value="4" />
+            <Setter Property="Padding" Value="16 16 16 20" />
+            <Setter Property="Margin" Value="0 0 0 16" />
         </Style>
 
         <ObjectDataProvider x:Key="AudioType"
@@ -75,7 +84,7 @@
                 </Grid.RowDefinitions>
 
                 <!--抬头和访问按钮部分-->
-                <Grid Grid.Row="0">
+                <Grid Grid.Row="0" Margin="0 0 0 16">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
@@ -375,7 +384,8 @@
                 </Grid>
 
                 <!--导入数据集部分-->
-                <Grid Row="1">
+                <Border Grid.Row="1" Style="{StaticResource SectionBorder}">
+                <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
@@ -384,7 +394,7 @@
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
-                    <Grid Row="0" Margin="0 12">
+                    <Grid Row="0" Margin="0 0 0 12">
                         <TextBlock FontSize="16" FontWeight="Medium">
                             数据集
                         </TextBlock>
@@ -406,7 +416,7 @@
                         </Button>
                     </Grid>
 
-                    <Grid Row="3" Margin="0 0 0 8">
+                    <Grid Row="3" Margin="0 0 0 0">
                         <Button Style="{StaticResource CnnPageSecondaryButton}"
                                 FontSize="14"
                                 Click="CnnPageRefreshButton_Click"
@@ -425,15 +435,17 @@
 
                     </Grid>
                 </Grid>
-
-                <Grid Row="2">
+                </Border>
+                
+                <Border Grid.Row="2" Style="{StaticResource SectionBorder}">
+                <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
-                    <Grid Row="0" Margin="0 12">
+                    <Grid Row="0" Margin="0 0 0 12">
                         <TextBlock FontSize="16" FontWeight="Medium">
                             训练预处理
                         </TextBlock>
@@ -495,8 +507,10 @@
                         </Button>
                     </Grid>
                 </Grid>
+                </Border>
                 
-                <Grid Row="3" Margin="0 20 0 20">
+                <Border Grid.Row="3" Style="{StaticResource SectionBorder}">
+                <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
@@ -558,8 +572,10 @@
                     </Grid>
                     
                 </Grid>
+                </Border>
                 
-                <Grid Row="4" Margin="0 0 0 20">
+                <Border Grid.Row="4" Style="{StaticResource SectionBorder}">
+                <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
@@ -595,8 +611,10 @@
                         </Button>
                     </Grid>
                 </Grid>
+                </Border>
                 
-                <Grid Row="5" Margin="0 0 0 20">
+                <Border Grid.Row="5" Style="{StaticResource SectionBorder}">
+                <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
@@ -654,6 +672,7 @@
                         </Button>
                     </Grid>
                 </Grid>
+                </Border>
 
             </Grid>
         </ScrollViewer>
