@@ -9,12 +9,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Forms;
 using System.Windows.Forms.Design;
 using System.Windows.Markup;
 using System.Windows.Media;
 using Button = System.Windows.Controls.Button;
 using OpenFileDialog = Microsoft.Win32.OpenFileDialog;
+using FolderBrowserDialog = System.Windows.Forms.FolderBrowserDialog;
+using DialogResult = System.Windows.Forms.DialogResult;
 
 namespace FolkTrigger.Pages;
 
@@ -232,9 +233,22 @@ public partial class CnnPage : Page
         await process.WaitForExitAsync();
     }
 
-    private void ReimportSubprojectButton_Click(object sender, RoutedEventArgs e)
+    private async void ReimportSubprojectButton_Click(object sender, RoutedEventArgs e)
     {
+        FolderBrowserDialog dialog = new();
+        if (dialog.ShowDialog() != DialogResult.OK) return;
+        ProcessStartInfo start = new()
+        {
+            FileName = "cmd.exe",
+            Arguments =
+                $"/c \"mklink /d {AppDomain.CurrentDomain.BaseDirectory + "MetaFolk_CNN"} {dialog.SelectedPath}\""
+        };
+        using Process process = new();
+        process.StartInfo = start;
+        process.Start();
+        await process.WaitForExitAsync();
         _projectDirExist = CheckProjectDirExist();
+        ShowBottomInfoTextBlock("导入项目成功", "#7bcd65");
     }
 
     #endregion
