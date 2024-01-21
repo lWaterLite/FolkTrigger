@@ -99,7 +99,9 @@
                         <RadioButton GroupName="navigator"
                                      Style="{StaticResource NaviRadioBtn}"
                                      Content="&#xe615;"
-                                     Margin="0 0 0 3" />
+                                     Margin="0 0 0 3" 
+                                     Tag="{x:Type pages:SvcPage}"
+                                     Checked="NaviRadioButton_Checked" />
                     </StackPanel>
                 </Grid>
                 <Grid Row="1" />

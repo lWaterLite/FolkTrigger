@@ -3,9 +3,108 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:ft="clr-namespace:FTCustomControlLibrary;assembly=FTCustomControlLibrary"
+      xmlns:local="clr-namespace:FolkTrigger.Pages"
       mc:Ignorable="d"
-      Title="SvcPage" Height="540" Width="896" MinHeight="450" MinWidth="736" MaxHeight="900" MaxWidth="1536">
-    <Grid>
-        <TextBlock>This is Svc Page.</TextBlock>
+      Title="SvcPage" 
+      d:DesignHeight="900"
+      d:DesignWidth="1216">
+    
+    <Page.Resources>
+        <Style TargetType="{x:Type ft:LinkButton}">
+            <Setter Property="FontFamily" Value="{StaticResource IconFont}" />
+        </Style>
+    </Page.Resources>
+    
+    <Grid Background="Transparent">
+        <ScrollViewer Background="#262626" VerticalScrollBarVisibility="Auto" 
+                      HorizontalScrollBarVisibility="Disabled"
+                      Template="{StaticResource CustomScrollViewer}">
+            <Grid Margin="24 0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                
+                <Grid Grid.Row="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    
+                    <Grid Grid.Row="0" Margin="0 12">
+                        <TextBlock FontSize="16" FontWeight="Medium" Text="SVC" />
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="4*" />
+                            <ColumnDefinition Width="4*" />
+                            <ColumnDefinition Width="4*" />
+                            <ColumnDefinition Width="4*" />
+                        </Grid.ColumnDefinitions>
+                        
+                        <ft:LinkButton Grid.Row="0" Grid.Column="0"
+                                       LinkNameText="自述文档"
+                                       LinkPathText="./readme.md"
+                                       IconText="&#xe610;" 
+                                       Tag="{x:Static local:SvgLink.Readme}"
+                                       Click="SvcPageLinkButton_Click"/>
+                        
+                        <ft:LinkButton Grid.Row="0" Grid.Column="1"
+                                       LinkNameText="根目录"
+                                       LinkPathText="."
+                                       IconText="&#xe60e;" 
+                                       Tag="{x:Static local:SvgLink.Folder}"
+                                       Click="SvcPageLinkButton_Click"/>
+                        
+                        <ft:LinkButton Grid.Row="0" Grid.Column="2"
+                                       LinkNameText="配置文件夹"
+                                       LinkPathText="./configs"
+                                       IconText="&#xe93e;" 
+                                       Tag="{x:Static local:SvgLink.Configs}"
+                                       Click="SvcPageLinkButton_Click"/>
+                        
+                        <ft:LinkButton Grid.Row="0" Grid.Column="3"
+                                       LinkNameText="原始数据文件夹"
+                                       LinkPathText="./dataset_raw"
+                                       IconText="&#xea94;" 
+                                       Tag="{x:Static local:SvgLink.DatasetRaw}"
+                                       Click="SvcPageLinkButton_Click"/>
+                        
+                        <ft:LinkButton Grid.Row="1" Grid.Column="0"
+                                       LinkNameText="训练文件夹(日志,底模和检查点)"
+                                       LinkPathText="./logs"
+                                       IconText="&#xe637;" 
+                                       Tag="{x:Static local:SvgLink.Logs}"
+                                       Click="SvcPageLinkButton_Click"/>
+                        
+                        <ft:LinkButton Grid.Row="1" Grid.Column="1"
+                                       LinkNameText="预训练文件夹(预训练模型)"
+                                       LinkPathText="./pretrain"
+                                       IconText="&#xe62f;" 
+                                       Tag="{x:Static local:SvgLink.Pretrain}"
+                                       Click="SvcPageLinkButton_Click"/>
+                        
+                        <ft:LinkButton Grid.Row="1" Grid.Column="2"
+                                       LinkNameText="拟合模型文件夹"
+                                       LinkPathText="./trained"
+                                       IconText="&#xe631;" 
+                                       Tag="{x:Static local:SvgLink.Trained}"
+                                       Click="SvcPageLinkButton_Click"/>
+                        
+                        <ft:LinkButton Grid.Row="1" Grid.Column="3"
+                                       LinkNameText="拟合结果文件夹"
+                                       LinkPathText="./results"
+                                       IconText="&#xea93;" 
+                                       Tag="{x:Static local:SvgLink.Results}"
+                                       Click="SvcPageLinkButton_Click"/>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </ScrollViewer>
     </Grid>
 </Page>

@@ -113,7 +113,7 @@
                         </Grid.ColumnDefinitions>
 
                         <ft:LinkButton Grid.Row="0" Grid.Column="0"
-                                       LinkNameText="描述文件"
+                                       LinkNameText="自述文档"
                                        LinkPathText="./readme.md"
                                        IconText="&#xe605;"
                                        Tag="{x:Static local:CnnLink.Readme}"
