@@ -9,4 +9,6 @@
         <Setter Property="FontFamily" Value="Microsoft Yahei" />
         <Setter Property="Foreground" Value="White" />
     </Style>
+    
+    <FontFamily x:Key="IconFont">pack://application:,,,/Assets/Font/#folktrigger</FontFamily>
 </ResourceDictionary>

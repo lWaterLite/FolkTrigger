@@ -9,25 +9,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="SharpVectors" Version="1.8.3" />
-    </ItemGroup>
-
-    <ItemGroup>
       <None Remove="Assets\Icon\Minimize.svg" />
-      <Resource Include="Assets\Icon\Cnn\Cnn.svg" />
-      <Resource Include="Assets\Icon\Minimize.svg" />
       <None Remove="Assets\Icon\Maximize.svg" />
-      <Resource Include="Assets\Icon\Maximize.svg" />
       <None Remove="Assets\Icon\Close.svg" />
-      <Resource Include="Assets\Icon\Close.svg" />
       <None Remove="Assets\Icon\Select-2.svg" />
       <None Remove="Assets\Icon\Start.svg" />
-      <Resource Include="Assets\Icon\Start.svg" />
       <None Remove="Assets\Icon\Svc.svg" />
-      <Resource Include="Assets\Icon\Svc.svg" />
       <None Remove="Assets\Icon\Cnn.svg" />
       <None Remove="Assets\Icon\Config.svg" />
-      <Resource Include="Assets\Icon\Config.svg" />
       <None Remove="Assets\Image\1638087331855.png" />
       <None Remove="Assets\Image\start_1.png" />
       <Resource Include="Assets\Image\start_1.png" />
