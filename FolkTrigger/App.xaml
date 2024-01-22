@@ -9,6 +9,7 @@
                 <ResourceDictionary Source="/Style/CustomScrollViewer.xaml" />
                 <ResourceDictionary Source="/Style/CustomComboBox.xaml" />
                 <ResourceDictionary Source="/Style/GlobalStyle.xaml" />
+                <ResourceDictionary Source="/Style/CustomBorder.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

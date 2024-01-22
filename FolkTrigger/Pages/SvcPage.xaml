@@ -5,12 +5,16 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:ft="clr-namespace:FTCustomControlLibrary;assembly=FTCustomControlLibrary"
       xmlns:local="clr-namespace:FolkTrigger.Pages"
+      xmlns:vm="clr-namespace:FolkTrigger.ViewModels"
       mc:Ignorable="d"
+      DataContext="{DynamicResource SvcPageViewModel}"
       Title="SvcPage" 
       d:DesignHeight="900"
       d:DesignWidth="1216">
     
     <Page.Resources>
+        <vm:SvcPageViewModel x:Key="SvcPageViewModel" />
+        
         <Style TargetType="{x:Type ft:LinkButton}">
             <Setter Property="FontFamily" Value="{StaticResource IconFont}" />
         </Style>
@@ -23,9 +27,10 @@
             <Grid Margin="24 0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 
-                <Grid Grid.Row="0">
+                <Grid Grid.Row="0" Margin="0 0 0 16">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
@@ -103,6 +108,36 @@
                                        Tag="{x:Static local:SvgLink.Results}"
                                        Click="SvcPageLinkButton_Click"/>
                     </Grid>
+                </Grid>
+                
+                <Grid Grid.Row="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    
+                    <Border Grid.Row="0" Style="{StaticResource SectionBorder}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            
+                            <Grid Grid.Row="0" Margin="0 0 0 12">
+                                <TextBlock FontSize="16" Text="训练数据集" />
+                            </Grid>
+                            <Grid Grid.Row="1">
+                                <ListView ItemsSource="{Binding Speakers}">
+                                    <ListView.View>
+                                        <GridView>
+                                            <GridViewColumn Header="说话人" DisplayMemberBinding="{Binding Name}"/>
+                                            <GridViewColumn Header="数据量" DisplayMemberBinding="{Binding Count}"/>
+                                        </GridView>
+                                    </ListView.View>
+                                </ListView>
+                            </Grid>
+                        </Grid>
+                    </Border>
                 </Grid>
             </Grid>
         </ScrollViewer>

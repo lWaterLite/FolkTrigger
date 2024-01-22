@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
+using FolkTrigger.ViewModels;
 
 namespace FolkTrigger.Pages;
 
@@ -9,10 +10,14 @@ public partial class SvcPage
 {
     
     private readonly string _basePath = AppDomain.CurrentDomain.BaseDirectory + @"MetaFolk_SVC\";
+    private SvcPageViewModel _viewModel;
     
     public SvcPage()
     {
         InitializeComponent();
+        _viewModel = (DataContext as SvcPageViewModel)! ;
+        
+        _viewModel.Speakers.Add(new Speaker(){Name = "lsx", Count = 123});
     }
 
     #region RoutedEventMethods

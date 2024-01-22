@@ -30,15 +30,6 @@
             <Setter Property="TextAlignment" Value="Center" />
         </Style>
 
-        <Style x:Key="SectionBorder" TargetType="{x:Type Border}">
-            <Setter Property="Background" Value="Transparent" />
-            <Setter Property="BorderThickness" Value="2" />
-            <Setter Property="BorderBrush" Value="#6a6a6a" />
-            <Setter Property="CornerRadius" Value="4" />
-            <Setter Property="Padding" Value="16 16 16 20" />
-            <Setter Property="Margin" Value="0 0 0 16" />
-        </Style>
-
         <Style TargetType="{x:Type ft:LinkButton}">
             <Setter Property="FontFamily" Value="pack://application:,,,/Assets/Font/#folktrigger" />
         </Style>
