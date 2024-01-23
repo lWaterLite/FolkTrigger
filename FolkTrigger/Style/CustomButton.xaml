@@ -106,8 +106,10 @@
         </Setter>
     </Style>
 
-    <Style x:Key="CnnPagePrimaryButton" TargetType="{x:Type Button}">
+    <Style x:Key="PrimaryButton" TargetType="{x:Type Button}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Padding" Value="0 8" />
+        <Setter Property="FontSize" Value="14" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -130,8 +132,10 @@
         </Setter>
     </Style>
 
-    <Style x:Key="CnnPageSecondaryButton" TargetType="{x:Type Button}">
+    <Style x:Key="SecondaryButton" TargetType="{x:Type Button}">
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Padding" Value="0 8" />
+        <Setter Property="FontSize" Value="14" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
