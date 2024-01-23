@@ -32,16 +32,18 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type DataGrid}">
-                        <Grid>
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="*" />
-                            </Grid.RowDefinitions>
-                            <DataGridColumnHeadersPresenter Grid.Row="0"/>
-                            <ScrollViewer Grid.Row="1" x:Name="DG_ScrollViewer" Template="{StaticResource CustomScrollViewer}" >
-                                <ItemsPresenter/>
-                            </ScrollViewer>
-                        </Grid>
+                        <Border BorderThickness="1" BorderBrush="#3a3a3a" CornerRadius="8" Padding="8">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <DataGridColumnHeadersPresenter Grid.Row="0"/>
+                                <ScrollViewer Grid.Row="1" x:Name="DG_ScrollViewer" Template="{StaticResource CustomScrollViewer}" >
+                                    <ItemsPresenter/>
+                                </ScrollViewer>
+                            </Grid>
+                        </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>

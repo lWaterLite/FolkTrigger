@@ -121,12 +121,14 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             
                             <Grid Grid.Row="0" Margin="0 0 0 12">
                                 <TextBlock FontSize="16" Text="训练数据集" />
                             </Grid>
-                            <Grid Grid.Row="1">
+                            <Grid Grid.Row="1" Margin="0 0 0 8"
+                                  x:Name="TrainingDatasetDataGridSection">
                                 <DataGrid ItemsSource="{Binding Speakers}" 
                                           AutoGenerateColumns="False"
                                           CanUserAddRows="False"
@@ -140,6 +142,35 @@
                                         <DataGridTextColumn Width="2*" Header="数据量" Binding="{Binding Count}" />
                                     </DataGrid.Columns>
                                 </DataGrid>
+                            </Grid>
+                            <Border Grid.Row="1" Margin="0 0 0 8" 
+                                    BorderThickness="1" BorderBrush="#3a3a3a" CornerRadius="4"
+                                    Visibility="Collapsed"
+                                    x:Name="TrainingDatasetMessageSection">
+                                <TextBlock Text="未检测到任何数据集" 
+                                           VerticalAlignment="Center" 
+                                           HorizontalAlignment="Center" 
+                                           FontSize="16"/>
+                            </Border>
+                            
+                            <Grid Grid.Row="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="2*" />
+                                </Grid.ColumnDefinitions>
+                                
+                                <Button Grid.Column="0"
+                                        Margin="16 0"
+                                        Style="{StaticResource PrimaryButton}"
+                                        Click="TrainingDatasetImportButton_Click">
+                                    导入数据集
+                                </Button>
+                                <Button Grid.Column="1"
+                                        Margin="16 0"
+                                        Style="{StaticResource SecondaryButton}"
+                                        Click="TrainingDatasetReloadButton_Click">
+                                    重载数据集
+                                </Button>
                             </Grid>
                         </Grid>
                     </Border>

@@ -187,19 +187,15 @@
                         </Grid>
 
                         <Grid Row="2" Margin="0 0 0 8">
-                            <Button Style="{StaticResource CnnPagePrimaryButton}"
-                                    FontSize="14"
-                                    Click="CnnPageLoadButton_Click"
-                                    Padding="0 8">
+                            <Button Style="{StaticResource PrimaryButton}"
+                                    Click="CnnPageLoadButton_Click">
                                 导入数据集
                             </Button>
                         </Grid>
 
                         <Grid Row="3" Margin="0 0 0 0">
-                            <Button Style="{StaticResource CnnPageSecondaryButton}"
-                                    FontSize="14"
-                                    Click="CnnPageRefreshButton_Click"
-                                    Padding="0 8">
+                            <Button Style="{StaticResource SecondaryButton}"
+                                    Click="CnnPageRefreshButton_Click">
                                 重载数据集
                             </Button>
                         </Grid>
@@ -285,9 +281,7 @@
                         </Border>
 
                         <Grid Row="2">
-                            <Button Style="{StaticResource CnnPagePrimaryButton}"
-                                    FontSize="14"
-                                    Padding="0 8"
+                            <Button Style="{StaticResource PrimaryButton}"
                                     Click="PreprocessButton_Click">
                                 运行预处理
                             </Button>
@@ -351,9 +345,7 @@
                         </Border>
 
                         <Grid Row="2">
-                            <Button Style="{StaticResource CnnPagePrimaryButton}"
-                                    FontSize="14"
-                                    Padding="0 8"
+                            <Button Style="{StaticResource PrimaryButton}"
                                     Click="TrainingButton_Click">
                                 开始训练
                             </Button>
@@ -383,18 +375,14 @@
                         </Border>
 
                         <Grid Row="2" Margin="0 0 0 8">
-                            <Button Style="{StaticResource CnnPagePrimaryButton}"
-                                    FontSize="14"
-                                    Padding="0 8"
+                            <Button Style="{StaticResource PrimaryButton}"
                                     Click="SelectCompressModelButton_Click">
                                 选择模型
                             </Button>
                         </Grid>
 
                         <Grid Row="3">
-                            <Button Style="{StaticResource CnnPageSecondaryButton}"
-                                    FontSize="14"
-                                    Padding="0 8"
+                            <Button Style="{StaticResource SecondaryButton}"
                                     Click="CompressModelButton_Click">
                                 压缩模型
                             </Button>
@@ -436,27 +424,21 @@
                         </Border>
 
                         <Grid Row="3" Margin="0 0 0 8">
-                            <Button Style="{StaticResource CnnPagePrimaryButton}"
-                                    FontSize="14"
-                                    Padding="0 8"
+                            <Button Style="{StaticResource PrimaryButton}"
                                     Click="SelectInferenceModelButton_Click">
                                 选择模型
                             </Button>
                         </Grid>
 
                         <Grid Row="4" Margin="0 0 0 8">
-                            <Button Style="{StaticResource CnnPageSecondaryButton}"
-                                    FontSize="14"
-                                    Padding="0 8"
+                            <Button Style="{StaticResource SecondaryButton}"
                                     Click="ReloadInferenceDataButton_Click">
                                 重载数据
                             </Button>
                         </Grid>
 
                         <Grid Row="5">
-                            <Button Style="{StaticResource CnnPagePrimaryButton}"
-                                    FontSize="14"
-                                    Padding="0 8"
+                            <Button Style="{StaticResource PrimaryButton}"
                                     Click="InferenceButton_Click">
                                 开始推理
                             </Button>
