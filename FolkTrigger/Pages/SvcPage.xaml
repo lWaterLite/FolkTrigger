@@ -130,6 +130,10 @@
                                 <DataGrid ItemsSource="{Binding Speakers}" 
                                           AutoGenerateColumns="False"
                                           CanUserAddRows="False"
+                                          IsReadOnly="True"
+                                          MaxHeight="128"
+                                          CanUserResizeColumns="True"
+                                          CanUserResizeRows="False"
                                           CanUserDeleteRows="False">
                                     <DataGrid.Columns>
                                         <DataGridTextColumn Width="2*" Header="说话人" Binding="{Binding Name}"/>

@@ -18,6 +18,10 @@ public partial class SvcPage
         _viewModel = (DataContext as SvcPageViewModel)! ;
         
         _viewModel.Speakers.Add(new Speaker(){Name = "lsx", Count = 123});
+        _viewModel.Speakers.Add(new Speaker(){Name = "lsx", Count = 123});
+        _viewModel.Speakers.Add(new Speaker(){Name = "lsx", Count = 123});
+        _viewModel.Speakers.Add(new Speaker(){Name = "lsx", Count = 123});
+        _viewModel.Speakers.Add(new Speaker(){Name = "lsx", Count = 435645});
     }
 
     #region RoutedEventMethods

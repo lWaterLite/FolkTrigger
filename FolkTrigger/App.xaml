@@ -10,6 +10,7 @@
                 <ResourceDictionary Source="/Style/CustomComboBox.xaml" />
                 <ResourceDictionary Source="/Style/GlobalStyle.xaml" />
                 <ResourceDictionary Source="/Style/CustomBorder.xaml" />
+                <ResourceDictionary Source="/Style/CustomDataGrid.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
