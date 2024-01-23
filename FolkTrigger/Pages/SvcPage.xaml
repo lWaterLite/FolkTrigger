@@ -127,14 +127,15 @@
                                 <TextBlock FontSize="16" Text="训练数据集" />
                             </Grid>
                             <Grid Grid.Row="1">
-                                <ListView ItemsSource="{Binding Speakers}">
-                                    <ListView.View>
-                                        <GridView>
-                                            <GridViewColumn Header="说话人" DisplayMemberBinding="{Binding Name}"/>
-                                            <GridViewColumn Header="数据量" DisplayMemberBinding="{Binding Count}"/>
-                                        </GridView>
-                                    </ListView.View>
-                                </ListView>
+                                <DataGrid ItemsSource="{Binding Speakers}" 
+                                          AutoGenerateColumns="False"
+                                          CanUserAddRows="False"
+                                          CanUserDeleteRows="False">
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Width="2*" Header="说话人" Binding="{Binding Name}"/>
+                                        <DataGridTextColumn Width="2*" Header="数据量" Binding="{Binding Count}" />
+                                    </DataGrid.Columns>
+                                </DataGrid>
                             </Grid>
                         </Grid>
                     </Border>

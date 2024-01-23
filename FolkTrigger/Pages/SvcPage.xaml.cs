@@ -10,7 +10,7 @@ public partial class SvcPage
 {
     
     private readonly string _basePath = AppDomain.CurrentDomain.BaseDirectory + @"MetaFolk_SVC\";
-    private SvcPageViewModel _viewModel;
+    private readonly SvcPageViewModel _viewModel;
     
     public SvcPage()
     {
