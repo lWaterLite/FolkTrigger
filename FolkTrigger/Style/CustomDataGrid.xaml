@@ -4,6 +4,16 @@
         <ResourceDictionary Source="CustomScrollViewer.xaml" />
     </ResourceDictionary.MergedDictionaries>
     
+    <Style TargetType="{x:Type Thumb}" x:Key="DataGridColumnHeaderThumb">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Rectangle Width="1" Fill="#3a3a3a" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
     <Style TargetType="DataGrid">
             <!--网格线颜色-->
             <Setter Property="Background" Value="#1E1E1E" />
@@ -27,8 +37,7 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-                            
-                            <DataGridColumnHeadersPresenter Grid.Row="0" />
+                            <DataGridColumnHeadersPresenter Grid.Row="0"/>
                             <ScrollViewer Grid.Row="1" x:Name="DG_ScrollViewer" Template="{StaticResource CustomScrollViewer}" >
                                 <ItemsPresenter/>
                             </ScrollViewer>
@@ -39,22 +48,23 @@
         </Style>
  
         <!--标题栏样式-->
-        <Style TargetType="DataGridColumnHeader">
-            <Setter Property="SnapsToDevicePixels" Value="True" />
-            <Setter Property="MinWidth" Value="24" />
-            <Setter Property="Padding" Value="12 6" />
+        <Style TargetType="{x:Type DataGridColumnHeader}">
+            <Setter Property="MinWidth" Value="96" />
             <Setter Property="FontSize" Value="14" />
             <Setter Property="Cursor" Value="Hand" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="DataGridColumnHeader">
-                        <Border x:Name="BackgroundBorder" BorderThickness="0.5" BorderBrush="#3a3a3a" 
-                                Padding="{TemplateBinding Padding}">
-                            <Grid >
+                        <Border x:Name="BackgroundBorder" BorderThickness="0 1" BorderBrush="#3a3a3a">
+                            <Grid>
                                 <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
                                     <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
                                 </Grid.ColumnDefinitions>
-                                <ContentPresenter  Margin="0,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                <Thumb Grid.Column="0" x:Name="PART_LeftHeaderGripper" Style="{StaticResource DataGridColumnHeaderThumb}" /> 
+                                <ContentPresenter Grid.Column="1"  Margin="0 8" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                <Thumb Grid.Column="2" x:Name="PART_RightHeaderGripper" Style="{StaticResource DataGridColumnHeaderThumb}" />
                             </Grid>
                         </Border>
                     </ControlTemplate>
