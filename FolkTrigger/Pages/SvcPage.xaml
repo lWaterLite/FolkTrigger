@@ -9,7 +9,7 @@
       mc:Ignorable="d"
       DataContext="{DynamicResource SvcPageViewModel}"
       Title="SvcPage" 
-      d:DesignHeight="900"
+      d:DesignHeight="1200"
       d:DesignWidth="1216">
     
     <Page.Resources>
@@ -26,6 +26,9 @@
                       Template="{StaticResource CustomScrollViewer}">
             <Grid Margin="24 0">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
@@ -82,7 +85,7 @@
                         
                         <ft:LinkButton Grid.Row="1" Grid.Column="0"
                                        LinkNameText="训练文件夹(日志,底模和检查点)"
-                                       LinkPathText="./logs"
+                                       LinkPathText="./logs/44k"
                                        IconText="&#xe637;" 
                                        Tag="{x:Static local:SvgLink.Logs}"
                                        Click="SvcPageLinkButton_Click"/>
@@ -175,6 +178,131 @@
                         </Grid>
                     </Border>
                 </Grid>
+                
+                <Border Grid.Row="2"
+                        Style="{StaticResource SectionBorder}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        
+                        <TextBlock Grid.Row="0"
+                                   Margin="0 0 0 12"
+                                   FontSize="16"
+                                   Text="训练预处理" />
+                        
+                        <Border Grid.Row="1" Style="{StaticResource TextCardBorder}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="2*" />
+                                    <ColumnDefinition Width="2*" />
+                                </Grid.ColumnDefinitions>
+                                
+                                <StackPanel Grid.Column="0"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            Orientation="Horizontal">
+                                    <TextBlock FontSize="14" Margin="0 0 12 0" 
+                                               TextAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               Text="响度匹配" />
+                                    <ft:Switcher x:Name="LoudnormSwitcher"
+                                                 IsChecked="True" />
+                                </StackPanel>
+                                <StackPanel Grid.Column="1"
+                                            Orientation="Horizontal"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center">
+                                    <TextBlock FontSize="14" Margin="0 0 12 0"
+                                               TextAlignment="Center"
+                                               VerticalAlignment="Center"
+                                               Text="启用浅扩散" />
+                                    <ft:Switcher x:Name="UseDiffusionSwitcher"
+                                                 IsChecked="False" />
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+                        
+                        <Button Grid.Row="2"
+                                Style="{StaticResource PrimaryButton}"
+                                Content="开始训练预处理" />
+                    </Grid>
+                </Border>
+                
+                <Border Grid.Row="3" Style="{StaticResource SectionBorder}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        
+                        <TextBlock Grid.Row="0"
+                                   FontSize="16"
+                                   Margin="0 0 0 12"
+                                   Text="模型训练" />
+                        
+                        <Button Grid.Row="1" 
+                                Style="{StaticResource PrimaryButton}"
+                                Margin="0 0 0 8"
+                                Content="开始模型训练" />
+                        
+                        <Button Grid.Row="2"
+                                Style="{StaticResource SecondaryButton}"
+                                Content="开始浅扩散模型训练" />
+                    </Grid>
+                </Border>
+                
+                <Border Grid.Row="4"
+                        Style="{StaticResource SectionBorder}">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        
+                        <TextBlock Grid.Row="0"
+                                   Margin="0 0 0 12"
+                                   FontSize="16"
+                                   Text="模型压缩" />
+                        
+                        <Border Grid.Row="1"
+                                Style="{StaticResource TextCardBorder}">
+                            <StackPanel Orientation="Vertical"
+                                        HorizontalAlignment="Center">
+                                <TextBlock Margin="0 0 0 8"
+                                           FontSize="14"
+                                           Text="{Binding Path=CompressModelPath, Mode=OneWay}" />
+                                <TextBlock FontSize="14"
+                                           Text="{Binding Path=CompressConfigPath, Mode=OneWay}" />
+                            </StackPanel>
+                        </Border>
+                        
+                        <Grid Grid.Row="2" Margin="0 0 0 8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="2*" />
+                            </Grid.ColumnDefinitions>
+                            
+                            <Button Grid.Column="0"
+                                    Style="{StaticResource SecondaryButton}"
+                                    Margin="16 0"
+                                    Content="选择模型文件" />
+                            <Button Grid.Column="1"
+                                    Style="{StaticResource SecondaryButton}"
+                                    Margin="16 0"
+                                    Content="选择配置文件" />
+                        </Grid>
+                        
+                        <Button Grid.Row="3"
+                                Style="{StaticResource PrimaryButton}"
+                                Content="开始压缩模型" />
+                    </Grid>
+                </Border>
             </Grid>
         </ScrollViewer>
     </Grid>

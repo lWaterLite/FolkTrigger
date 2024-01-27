@@ -50,7 +50,7 @@ public partial class SvcPage
                 Process.Start("explorer", _basePath + "\\dataset_raw");
                 break;
             case SvgLink.Logs:
-                Process.Start("explorer", _basePath + "\\logs");
+                Process.Start("explorer", _basePath + @"\logs\44k");
                 break;
             case SvgLink.Pretrain:
                 Process.Start("explorer", _basePath + "\\pretrain");
