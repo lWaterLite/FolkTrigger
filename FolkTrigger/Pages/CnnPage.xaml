@@ -14,18 +14,9 @@
     <Page.Resources>
         <local:CnnPageViewModel x:Key="CnnPageViewModel" />
 
-        <Style x:Key="TextCardBorder" TargetType="{x:Type Border}">
-            <Setter Property="Background" Value="#343434" />
-            <Setter Property="BorderBrush" Value="#6a6a6a" />
-            <Setter Property="BorderThickness" Value="2" />
-            <Setter Property="CornerRadius" Value="4" />
-            <Setter Property="Margin" Value="0 0 0 8" />
-        </Style>
-
         <Style x:Key="TextCardText" TargetType="{x:Type TextBlock}">
             <Setter Property="FontFamily" Value="Microsoft Yahei" />
             <Setter Property="Foreground" Value="White" />
-            <Setter Property="Margin" Value="4 12" />
             <Setter Property="FontSize" Value="14" />
             <Setter Property="TextAlignment" Value="Center" />
         </Style>
@@ -227,7 +218,7 @@
                             </TextBlock>
                         </Grid>
 
-                        <Border Grid.Row="1" Style="{StaticResource TextCardBorder}" Padding="12">
+                        <Border Grid.Row="1" Style="{StaticResource TextCardBorder}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="3*" />
@@ -303,7 +294,7 @@
                             </TextBlock>
                         </Grid>
 
-                        <Border Grid.Row="1" Style="{StaticResource TextCardBorder}" Padding="12">
+                        <Border Grid.Row="1" Style="{StaticResource TextCardBorder}">
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="2*" />
