@@ -97,6 +97,67 @@ public partial class SvcPage
         ReloadTrainingDataset();
     }
 
+    private async void PreprocessButton_Click(object sender, RoutedEventArgs eventArgs)
+    {
+        const string virtualenvCommand = @"venv\Scripts\activate";
+        string preprocessCommand = "python ./resample.py " +
+                                   $"{((bool)LoudnormSwitcher.IsChecked! ? "" : "--skip_loudnorm")} ";
+        const string configCommand = "python ./preprocess_first_config.py ";
+        string hubertCommand = "python ./preprocess_hubert_f0.py " +
+                               $"{((bool)UseDiffusionSwitcher.IsChecked! ? "--use_diff" : "")} ";
+
+        ProcessStartInfo start = new()
+        {
+            FileName = "cmd.exe",
+            WorkingDirectory = _basePath,
+            Arguments = $"/c \"echo {"executing command: " + preprocessCommand} " +
+                        $"& {virtualenvCommand} & {preprocessCommand} " +
+                        $"& echo {"executing command: " + configCommand} & {configCommand} " +
+                        $"& echo {"executing command: " + hubertCommand} & {hubertCommand} & pause\""
+        };
+        using Process process = new();
+        process.StartInfo = start;
+        process.Start();
+
+        await process.WaitForExitAsync();
+    }
+
+    private async void ModelTrainingButton_Click(object sender, RoutedEventArgs e)
+    {
+        const string virtualenvCommand = @"venv\Scripts\activate";
+        const string trainingCommand = "python ./train.py -c config/config.json -m 44k";
+        ProcessStartInfo startInfo = new()
+        {
+            FileName = "cmd.exe",
+            WorkingDirectory = _basePath,
+            Arguments = $"/c \"echo {"executing command: " + trainingCommand} " +
+                        $"& {virtualenvCommand} & {trainingCommand} & pause\""
+        };
+        using Process process = new();
+        process.StartInfo = startInfo;
+        process.Start();
+
+        await process.WaitForExitAsync();
+    }
+
+    private async void DiffusionTrainingButton_Click(object sender, RoutedEventArgs e)
+    {
+        const string virtualenvCommand = @"venv\Scripts\activate";
+        const string trainingCommand = "python ./train_diff.py -c configs/diffusion.yaml";
+        ProcessStartInfo startInfo = new()
+        {
+            FileName = "cmd.exe",
+            WorkingDirectory = _basePath,
+            Arguments = $"/c \"echo {"executing command: " + trainingCommand} " +
+                        $"& {virtualenvCommand} & {trainingCommand} & pause\""
+        };
+        using Process process = new();
+        process.StartInfo = startInfo;
+        process.Start();
+
+        await process.WaitForExitAsync();
+    }
+
     #endregion
 
     #region Utils

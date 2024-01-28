@@ -227,7 +227,8 @@
                         
                         <Button Grid.Row="2"
                                 Style="{StaticResource PrimaryButton}"
-                                Content="开始训练预处理" />
+                                Content="开始训练预处理" 
+                                Click="PreprocessButton_Click"/>
                     </Grid>
                 </Border>
                 
@@ -247,11 +248,13 @@
                         <Button Grid.Row="1" 
                                 Style="{StaticResource PrimaryButton}"
                                 Margin="0 0 0 8"
-                                Content="开始模型训练" />
+                                Content="开始模型训练"
+                                Click="ModelTrainingButton_Click"/>
                         
                         <Button Grid.Row="2"
                                 Style="{StaticResource SecondaryButton}"
-                                Content="开始浅扩散模型训练" />
+                                Content="开始浅扩散模型训练"
+                                Click="DiffusionTrainingButton_Click"/>
                     </Grid>
                 </Border>
                 
